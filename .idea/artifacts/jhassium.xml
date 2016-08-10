@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="jhassium">
+    <output-path>$PROJECT_DIR$/out/artifacts/jhassium</output-path>
+    <root id="archive" name="jhassium.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/commons-io-2.5/commons-io-2.5.jar" path-in-jar="/" />
+      <element id="module-output" name="JHassium" />
+    </root>
+  </artifact>
+</component>
