@@ -44,12 +44,12 @@ public class HassiumFunction extends HassiumObject {
 
     public HassiumObject invoke(VirtualMachine vm, HassiumObject[] args) {
         if (vm != null)
-            vm.CallStack.push(String.format("func %1s (%2s)", target.getName(), paramLengths[paramLengths.length - 1]));
+            vm.getCallStack().push(String.format("func %1s (%2s)", target.getName(), paramLengths[paramLengths.length - 1]));
         if (paramLengths[0] != -1) {
             for (int i : paramLengths) {
                 if (i == args.length) {
                     if (vm != null)
-                        vm.CallStack.pop();
+                        vm.getCallStack().pop();
                     try {
                         return (HassiumObject) target.invoke(object, vm, args);
                     } catch (Exception e) {
@@ -60,7 +60,7 @@ public class HassiumFunction extends HassiumObject {
             HassiumLogger.error(String.format("Expected argument length of %1s, got %2s", paramLengths[0], args.length));
         } else {
             if (vm != null)
-                vm.CallStack.pop();
+                vm.getCallStack().pop();
             try {
                 return (HassiumObject) target.invoke(object, vm, args);
             } catch (Exception e) {

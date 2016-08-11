@@ -191,7 +191,7 @@ public class HassiumList extends HassiumObject {
     }
 
     private HassiumList __add__(VirtualMachine vm, HassiumObject[] args) {
-        HassiumList copy = Helpers.as(this.Clone(), HassiumList.class);
+        HassiumList copy = Helpers.as(this.clone(), HassiumList.class);
         copy.value.add(args[0]);
         return copy;
     }

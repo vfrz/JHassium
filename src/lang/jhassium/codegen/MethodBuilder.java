@@ -8,6 +8,7 @@ import lang.jhassium.runtime.standardlibrary.HassiumClass;
 import lang.jhassium.runtime.standardlibrary.HassiumObject;
 import lang.jhassium.runtime.standardlibrary.ICloneable;
 import lang.jhassium.runtime.standardlibrary.types.HassiumFunction;
+import lang.jhassium.utils.HassiumLogger;
 
 import java.util.*;
 
@@ -49,68 +50,57 @@ public class MethodBuilder extends HassiumObject {
         return Name.equals("new");
     }
 
-    public MethodBuilder()
-    {
+    public MethodBuilder() {
         ReturnType = "";
     }
 
-    public HassiumObject invoke(VirtualMachine vm, HassiumObject[] args)
-    {
+    public HassiumObject invoke(VirtualMachine vm, HassiumObject[] args) {
         if (name != "__lambda__" && name != "__catch__")
             vm.getStackFrame().enterFrame();
 
         vm.getCallStack().push(SourceRepresentation != null ? SourceRepresentation : Name);
         int counter = 0;
-        for (Map.Entry<Parameter, Integer> param : Parameters.entrySet())
-        {
+        for (Map.Entry<Parameter, Integer> param : Parameters.entrySet()) {
             HassiumObject argument = args[counter++];
-            if (param.getKey().isEnforced())
-            {
-                if (!argument.Types.contains((HassiumTypeDefinition)vm.getGlobals().get(param.getKey().getType())))
-                    throw new InternalException(string.Format("Expected type {0} to {1}, instead got {2}!", param.Key.Type, param.Key.Name, argument.Type().ToString(vm)));
+            if (param.getKey().isEnforced()) {
+                if (!argument.Types.contains((HassiumTypeDefinition) vm.getGlobals().get(param.getKey().getType())))
+                    HassiumLogger.error(String.format("Expected type %1s to %2s, instead got %3s!", param.getKey().getType(), param.getKey().getName(), argument.type().toString(vm)));
             }
 
             vm.getStackFrame().add(param.getValue(), argument);
         }
         HassiumObject returnValue = vm.executeMethod(this);
-        if (ReturnType != "")
-        {
-            if (returnValue.Type() != vm.Globals[ReturnType])
-                throw new InternalException(string.Format("Expected return type of {0}. Instead got {1}!", ReturnType, returnValue.Type().ToString(vm)));
+        if (ReturnType != "") {
+            if (returnValue.type() != vm.getGlobals().get(ReturnType))
+                HassiumLogger.error(String.format("Expected return type of %1s. Instead got %2s!", ReturnType, returnValue.type().toString(vm)));
         }
         if (name != "__lambda__" && name != "__catch__")
-            vm.StackFrame.PopFrame();
+            vm.getStackFrame().popFrame();
 
-        if (isConstructor())
-        {
+        if (isConstructor()) {
             HassiumClass ret = new HassiumClass();
-            ret.Attributes = CloneDictionary(Parent.Attributes);
-            ret.AddType(Parent.TypeDefinition);
-            foreach (HassiumObject obj in ret.Attributes.Values)
-            if (obj is MethodBuilder)
-            ((MethodBuilder)obj).Parent = ret;
+            ret.Attributes = cloneDictionary(Parent.Attributes);
+            ret.addType(Parent.TypeDefinition);
+            ret.Attributes.values().stream().filter(obj -> obj instanceof MethodBuilder).forEach(obj -> ((MethodBuilder) obj).Parent = ret);
             return ret;
         }
-        vm.CallStack.Pop();
+        vm.getCallStack().pop();
         return returnValue;
     }
 
-    public static <TKey, TValue extends ICloneable> HashMap<TKey, TValue> cloneDictionary (HashMap<TKey, TValue> original)
-    {
+    public static <TKey, TValue extends ICloneable> HashMap<TKey, TValue> cloneDictionary(HashMap<TKey, TValue> original) {
         HashMap<TKey, TValue> ret = new HashMap<>(original.size());
-        for (Map.Entry<TKey, TValue> entry : original.entrySet())
-        {
+        for (Map.Entry<TKey, TValue> entry : original.entrySet()) {
             ret.put(entry.getKey(), (TValue) entry.getValue().clone());
         }
         return ret;
     }
 
-    public void emit(SourceLocation location,  InstructionType instructionType) {
+    public void emit(SourceLocation location, InstructionType instructionType) {
         emit(location, instructionType, 0);
     }
 
-    public void emit(SourceLocation location, InstructionType instructionType, double value)
-    {
+    public void emit(SourceLocation location, InstructionType instructionType, double value) {
         Instructions.add(new Instruction(instructionType, value, location));
     }
 }

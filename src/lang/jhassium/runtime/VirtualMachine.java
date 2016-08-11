@@ -4,14 +4,19 @@ import lang.jhassium.SourceLocation;
 import lang.jhassium.codegen.HassiumModule;
 import lang.jhassium.codegen.InstructionType;
 import lang.jhassium.codegen.MethodBuilder;
+import lang.jhassium.codegen.UserDefinedProperty;
+import lang.jhassium.runtime.standardlibrary.GlobalFunctions;
+import lang.jhassium.runtime.standardlibrary.HassiumExtend;
 import lang.jhassium.runtime.standardlibrary.HassiumObject;
+import lang.jhassium.runtime.standardlibrary.HassiumTrait;
 import lang.jhassium.runtime.standardlibrary.types.*;
 import lang.jhassium.utils.HassiumLogger;
 import lang.jhassium.utils.Helpers;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
+
+import static lang.jhassium.runtime.standardlibrary.GlobalFunctions.FunctionList;
+import static lang.jhassium.runtime.standardlibrary.types.HassiumTypesModule.*;
 
 /**
  * File : VirtualMachine.java
@@ -187,7 +192,7 @@ public class VirtualMachine {
                         else if (method.Parent.Attributes.containsKey(global_))
                             stack.push(method.Parent.Attributes.get(global_));
                         else
-                            throw new InternalException(string.Format("Cannot find global identifier {0}!", global_));
+                            HassiumLogger.error(String.format("Cannot find global identifier %1s!", global_));
                         break;
                     case Load_Global_Variable:
                         stack.push(module.Globals.get(argumentInt));
@@ -213,15 +218,15 @@ public class VirtualMachine {
                         stack.push(new HassiumBool(argument == 1));
                         break;
                     case Push_Handler:
-                        HassiumExceptionHandler handler = (HassiumExceptionHandler)module.ConstantPool[argumentInt];
+                        HassiumExceptionHandler handler = (HassiumExceptionHandler)module.ConstantPool.get(argumentInt);
                         handler.Frame = stackFrame.Frames.peek();
                         handlers.push(handler);
                         break;
                     case Push_Object:
-                        stack.push(module.ConstantPool[argumentInt]);
+                        stack.push(module.ConstantPool.get(argumentInt));
                         break;
                     case Raise:
-                        raiseException(stack.pop(), method, ref position);
+                        raiseException(stack.pop(), method);
                         break;
                     case Return:
                         return stack.pop();
@@ -239,55 +244,51 @@ public class VirtualMachine {
                         break;
                     case Store_Attribute:
                         location = stack.pop();
-                        attribute = module.ConstantPool[argumentInt].ToString(this);
-                        if (location is HassiumProperty)
+                        attribute = module.ConstantPool.get(argumentInt).toString(this);
+                        if (location instanceof HassiumProperty)
                     {
-                        HassiumProperty builtinProp = location as HassiumProperty;
-                        builtinProp.Invoke(this, new HassiumObject[] { stack.pop() });
+                        HassiumProperty builtinProp = Helpers.as(location, HassiumProperty.class);
+                        builtinProp.invoke(this, new HassiumObject[] { stack.pop() });
                     }
-                            else if (location is UserDefinedProperty)
+                            else if (location instanceof UserDefinedProperty)
                     {
-                        UserDefinedProperty userProp = location as UserDefinedProperty;
-                        userProp.SetMethod.Invoke(this, new HassiumObject[] { stack.pop() });
+                        UserDefinedProperty userProp = Helpers.as(location, UserDefinedProperty.class);
+                        userProp.SetMethod.invoke(this, new HassiumObject[] { stack.pop() });
                     }
                             else
                     try
                     {
-                        location.Attributes[attribute] = stack.pop();
+                        location.Attributes.put(attribute, stack.pop());
                     }
-                    catch (KeyNotFoundException)
+                    catch (Exception ex)
                     {
-                        throw new InternalException(location + " does not contain a definition for " + attribute);
+                        HassiumLogger.error(location + " does not contain a definition for " + attribute);
                     }
                     break;
                     case Store_Global_Variable:
-                        module.Globals[argumentInt] = stack.pop();
+                        module.Globals.put(argumentInt, stack.pop());
                         break;
                     case Store_List_Element:
                         index = stack.pop();
                         list = stack.pop();
                         value = stack.pop();
-                        stack.push(list.StoreIndex(this, index, value));
+                        stack.push(list.storeIndex(this, index, value));
                         break;
                     case Store_Local:
                         value = stack.pop();
-                        if (stackFrame.Contains(argumentInt))
-                            stackFrame.Modify(argumentInt, value);
+                        if (stackFrame.contains(argumentInt))
+                            stackFrame.modify(argumentInt, value);
                         else
-                            stackFrame.Add(argumentInt, value);
+                            stackFrame.add(argumentInt, value);
                         break;
                     case Unary_Operation:
                         executeUnaryOperation(stack.pop(), argumentInt);
                         break;
                 }
             }
-            catch (InternalException ex)
+            catch (Exception ex)
             {
-                RaiseException(new HassiumString(ex.Message), method, ref position);
-            }
-            catch (DivideByZeroException)
-            {
-                RaiseException(new HassiumString("Divide by zero!"), method, ref position);
+                raiseException(new HassiumString(ex.getMessage()), method);
             }
         }
         return HassiumObject.Null;
@@ -298,92 +299,92 @@ public class VirtualMachine {
         switch (argument)
         {
             case 0:
-                stack.push(left.Add(this, right));
+                stack.push(left.add(this, right));
                 break;
             case 1:
-                stack.push(left.Sub(this, right));
+                stack.push(left.sub(this, right));
                 break;
             case 2:
-                stack.push(left.Mul(this, right));
+                stack.push(left.mul(this, right));
                 break;
             case 3:
-                stack.push(left.Div(this, right));
+                stack.push(left.div(this, right));
                 break;
             case 4:
-                stack.push(new HassiumInt((long)Math.Floor((double)left.Div(this, right).Value)));
+                stack.push(new HassiumInt((long)Math.floor((double)left.div(this, right).getValue())));
                 break;
             case 5:
-                stack.push(left.Mod(this, right));
+                stack.push(left.mod(this, right));
                 break;
             case 6:
-                stack.push(left.XOR(this, right));
+                stack.push(left.xor(this, right));
                 break;
             case 7:
-                stack.push(left.OR(this, right));
+                stack.push(left.or(this, right));
                 break;
             case 8:
-                stack.push(left.Xand(this, right));
+                stack.push(left.xand(this, right));
                 break;
             case 9:
-                stack.push(left.Equals(this, right));
+                stack.push(left.equals(this, right));
                 break;
             case 10:
-                stack.push(left.NotEquals(this, right));
+                stack.push(left.notEquals(this, right));
                 break;
             case 11:
-                stack.push(left.GreaterThan(this, right));
+                stack.push(left.greaterThan(this, right));
                 break;
             case 12:
-                stack.push(left.GreaterThanOrEqual(this, right));
+                stack.push(left.greaterThanOrEqual(this, right));
                 break;
             case 13:
-                stack.push(left.LesserThan(this, right));
+                stack.push(left.lesserThan(this, right));
                 break;
             case 14:
-                stack.push(left.LesserThanOrEqual(this, right));
+                stack.push(left.lesserThanOrEqual(this, right));
                 break;
             case 15:
-                stack.push(new HassiumBool(HassiumBool.Create(left).Value || HassiumBool.Create(right).Value));
+                stack.push(new HassiumBool(HassiumBool.create(left).getValue() || HassiumBool.create(right).getValue()));
                 break;
             case 16:
-                stack.push(new HassiumBool(HassiumBool.Create(left).Value && HassiumBool.Create(right).Value));
+                stack.push(new HassiumBool(HassiumBool.create(left).getValue() && HassiumBool.create(right).getValue()));
                 break;
             case 17:
-                stack.push(new HassiumDouble(Math.Pow(HassiumDouble.Create(left).Value, HassiumDouble.Create(right).Value)));
+                stack.push(new HassiumDouble(Math.pow(HassiumDouble.create(left).getValue(), HassiumDouble.create(right).getValue())));
                 break;
             case 18:
-                stack.push(left.BitShiftLeft(this, right));
+                stack.push(left.bitShiftLeft(this, right));
                 break;
             case 19:
-                stack.push(left.BitShiftRight(this, right));
+                stack.push(left.bitShiftRight(this, right));
                 break;
             case 20:
-                stack.push(left is HassiumNull ? right : left);
+                stack.push(left instanceof HassiumNull ? right : left);
                 break;
             case 21:
-                stack.push(left.Contains(this, right));
+                stack.push(left.contains(this, right));
                 break;
             case 22:
-                if (right is HassiumTrait)
+                if (right instanceof HassiumTrait)
                 stack.push(new HassiumBool(((HassiumTrait)right).MatchesTrait(this, left)));
                     else
-                stack.push(new HassiumBool(left.Types.Contains(right.Type())));
+                stack.push(new HassiumBool(left.Types.contains(right.type())));
                 break;
             case 23:
-                stack.push(GlobalFunctions.FunctionList["range"].Invoke(this, new HassiumObject[] { left, right }));
+                stack.push(FunctionList.get("range").invoke(this, new HassiumObject[] { left, right }));
                 break;
         }
     }
 
-    public void raiseException(HassiumObject message, MethodBuilder method, ref int pos)
+    public void raiseException(HassiumObject message, MethodBuilder method)
     {
-        if (handlers.Count == 0)
-            throw new RuntimeException(message.ToString(this), sourceLocation);
+        if (handlers.size() == 0)
+            HassiumLogger.error(message.toString(this) + " At " + sourceLocation);
         else
         {
-            HassiumExceptionHandler handler = handlers.Peek() as HassiumExceptionHandler;
-            handler.Invoke(this, new HassiumObject[] { message });
-            exceptionReturns.Add(handler.SourceMethod, handler.SourceMethod.Labels[handler.Label]);
+            HassiumExceptionHandler handler = Helpers.as(handlers.peek(), HassiumExceptionHandler.class);
+            handler.invoke(this, new HassiumObject[] { message });
+            exceptionReturns.put(handler.getSourceMethod(), handler.getSourceMethod().Labels.get(handler.getLabel()));
         }
     }
 
@@ -392,64 +393,66 @@ public class VirtualMachine {
         switch (argument)
         {
             case 0:
-                stack.push(target.Not(this));
+                stack.push(target.not(this));
                 break;
             case 1:
-                stack.push(target.BitwiseComplement(this));
+                stack.push(target.bitwiseComplement(this));
                 break;
             case 2:
-                stack.push(target.Negate(this));
+                stack.push(target.negate(this));
                 break;
         }
     }
 
     private void gatherLabels(MethodBuilder method)
     {
-        method.Labels = new Dictionary<double, int>();
-        for (int i = 0; i < method.Instructions.Count; i++)
+        method.Labels = new HashMap<>();
+        for (int i = 0; i < method.Instructions.size(); i++)
         {
             //          Console.WriteLine(method.Instructions[i].InstructionType + "\t" + method.Instructions[i].Argument);
-            if (method.Instructions[i].InstructionType == InstructionType.Label)
-                method.Labels.Add(method.Instructions[i].Argument, i);
+            if (method.Instructions.get(i).getInstructionType() == InstructionType.Label)
+                method.Labels.put(method.Instructions.get(i).getArgument(), i);
         }
     }
 
     private void gatherGlobals(List<HassiumObject> constantPool)
     {
-        for (int i = 0; i < constantPool.Count; i++)
+        for (int i = 0; i < constantPool.size(); i++)
         {
-            if (GlobalFunctions.FunctionList.ContainsKey(constantPool[i].ToString(this)))
-                globals.Add(constantPool[i].ToString(this), GlobalFunctions.FunctionList[constantPool[i].ToString(this)]);
-            else if (module.Attributes.ContainsKey(constantPool[i].ToString(this)))
-                globals.Add(constantPool[i].ToString(this), module.Attributes[constantPool[i].ToString(this)]);
+            if (FunctionList.containsKey(constantPool.get(i).toString(this)))
+                globals.put(constantPool.get(i).toString(this), FunctionList.get(constantPool.get(i).toString(this)));
+            else if (module.Attributes.containsKey(constantPool.get(i).toString(this)))
+                globals.put(constantPool.get(i).toString(this), module.Attributes.get(constantPool.get(i).toString(this)));
         }
 
         // Import default types
-        foreach (var type in HassiumTypesModule.Instance.Attributes)
-        if (!globals.ContainsKey(type.Key))
-            globals.Add(type.Key, type.Value);
-        List<int> keys = new List<int>(module.Globals.Keys);
-        foreach (int key in keys)
-        module.Globals[key] = module.Globals[key].Invoke(this, new HassiumObject[0]);
+        for (Map.Entry<String, HassiumObject> type : Instance.Attributes.entrySet()) {
+            if (!globals.containsKey(type.getKey()))
+                globals.put(type.getKey(), type.getValue());
+        }
+        List<Integer> keys = new ArrayList<>(module.Globals.keySet());
+        for (int key : keys){
+            module.Globals.put(key, module.Globals.get(key).invoke(this, new HassiumObject[0]));
+        }
     }
 
     private void preformExtensions()
     {
-        foreach (string key in module.Attributes.Keys)
+        for (String key : module.Attributes.keySet())
         {
-            if (key.StartsWith("__extend__"))
+            if (key.startsWith("__extend__"))
             {
-                HassiumExtend extend = module.Attributes[key] as HassiumExtend;
-                HassiumObject target = extend.Target.Invoke(this, new HassiumObject[0]);
-                foreach (var attrib in extend.Additions.Attributes)
+                HassiumExtend extend = Helpers.as(module.Attributes.get(key), HassiumExtend.class);
+                HassiumObject target = extend.getTarget().invoke(this, new HassiumObject[0]);
+                for (Map.Entry<String, HassiumObject> attrib : extend.getAdditions().Attributes.entrySet())
                 {
-                    if (target.Attributes.ContainsKey(attrib.Key))
-                        target.Attributes.Remove(attrib.Key);
-                    target.Attributes.Add(attrib.Key, attrib.Value);
+                    if (target.Attributes.containsKey(attrib.getKey()))
+                        target.Attributes.remove(attrib.getKey());
+                    target.Attributes.put(attrib.getKey(), attrib.getValue());
                 }
-                if (globals.ContainsKey(key))
-                    globals.Remove(key);
-                globals.Add(key, target);
+                if (globals.containsKey(key))
+                    globals.remove(key);
+                globals.put(key, target);
             }
         }
     }
@@ -457,8 +460,9 @@ public class VirtualMachine {
     private void addArgs(List<String> args)
     {
         HassiumList list = new HassiumList(new HassiumObject[0]);
-        foreach (string arg in args)
-        list.Value.Add(new HassiumString(arg));
-        globals.Add("args", list);
+        for (String arg : args){
+            list.getValue().add(new HassiumString(arg));
+        }
+        globals.put("args", list);
     }
 }
