@@ -1,10 +1,10 @@
 package lang.jhassium.runtime.standardlibrary.types;
 
 import lang.jhassium.codegen.MethodBuilder;
+import lang.jhassium.runtime.Frame;
 import lang.jhassium.runtime.HassiumTypeDefinition;
 import lang.jhassium.runtime.VirtualMachine;
 import lang.jhassium.runtime.standardlibrary.HassiumObject;
-import lang.jhassium.runtime.Frame;
 import lang.jhassium.utils.HassiumLogger;
 
 /**
@@ -36,21 +36,19 @@ public class HassiumExceptionHandler extends HassiumObject {
         return label;
     }
 
-    public HassiumExceptionHandler(MethodBuilder sourceMethod, MethodBuilder handlerMethod, double label)
-    {
+    public HassiumExceptionHandler(MethodBuilder sourceMethod, MethodBuilder handlerMethod, double label) {
         this.sourceMethod = sourceMethod;
         this.handlerMethod = handlerMethod;
         this.label = label;
         try {
-        Attributes.put(HassiumObject.INVOKE_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__invoke__"), this, -1));
+            Attributes.put(HassiumObject.INVOKE_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__invoke__", VirtualMachine.class, HassiumObject[].class), this, -1));
         } catch (NoSuchMethodException e) {
             HassiumLogger.error("Internal error HassiumExceptionHandler : " + e.getMessage());
         }
         addType(HassiumExceptionHandler.TypeDefinition);
     }
 
-    private HassiumObject __invoke__ (VirtualMachine vm, HassiumObject[] args)
-    {
+    public HassiumObject __invoke__(VirtualMachine vm, HassiumObject[] args) {
         vm.getStackFrame().Frames.push(Frame);
         HassiumObject ret = handlerMethod.invoke(vm, args);
         vm.getStackFrame().popFrame();

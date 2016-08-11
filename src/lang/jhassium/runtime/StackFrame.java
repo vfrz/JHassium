@@ -3,7 +3,7 @@ package lang.jhassium.runtime;
 import lang.jhassium.runtime.standardlibrary.HassiumObject;
 import lang.jhassium.utils.HassiumLogger;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Stack;
 
 /**
@@ -17,7 +17,7 @@ public class StackFrame {
 
     public Stack<Frame> Frames;
 
-    public HashMap<Integer, HassiumObject> getLocals() {
+    public LinkedHashMap<Integer, HassiumObject> getLocals() {
         return Frames.peek().variables;
     }
 

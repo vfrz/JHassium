@@ -18,13 +18,11 @@ public class InternalModule extends HassiumObject {
         return name;
     }
 
-    public InternalModule(String name)
-    {
+    public InternalModule(String name) {
         this.name = name;
     }
 
-    public static List<InternalModule> InternalModules = new ArrayList<InternalModule>()
-    {{
+    public static List<InternalModule> InternalModules = new ArrayList<InternalModule>() {{
         //TODO Add internal modules
     }};
 

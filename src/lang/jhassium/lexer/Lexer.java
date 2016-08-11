@@ -5,7 +5,6 @@ import lang.jhassium.utils.HassiumLogger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * File : Lexer.java
@@ -21,36 +20,30 @@ public class Lexer {
     private String code;
     private SourceLocation location;
 
-    public List<Token> Scan(String source)
-    {
+    public List<Token> Scan(String source) {
         result = new ArrayList<>();
         position = 0;
         code = source;
         location = new SourceLocation(1, 0);
 
         whiteSpace();
-        while (position < code.length())
-        {
+        while (position < code.length()) {
             scanToken();
         }
 
         return result;
     }
 
-    private void scanToken()
-    {
+    private void scanToken() {
         char orig;
-        if (Character.isLetter((char)peekChar()) || (char)peekChar() == '_')
+        if (Character.isLetter((char) peekChar()) || (char) peekChar() == '_')
             result.add(scanIdentifier());
-        else if (Character.isDigit((char)peekChar()))
+        else if (Character.isDigit((char) peekChar()))
             result.add(scanNumber());
-        else
-        {
-            switch ((char)peekChar())
-            {
+        else {
+            switch ((char) peekChar()) {
                 case '@':
-                    if (peekChar() == '"')
-                    {
+                    if (peekChar() == '"') {
                         readChar();
                         result.add(scanString(true));
                     }
@@ -60,7 +53,7 @@ public class Lexer {
                     break;
                 case '\'':
                     readChar();
-                    result.add(new Token(TokenType.Char, Character.toString((char)readChar()), location));
+                    result.add(new Token(TokenType.Char, Character.toString((char) readChar()), location));
                     readChar();
                     break;
                 case ';':
@@ -69,12 +62,10 @@ public class Lexer {
                     break;
                 case ':':
                     readChar();
-                    if ((char)peekChar() == ':')
-                    {
+                    if ((char) peekChar() == ':') {
                         readChar();
                         result.add(new Token(TokenType.UnaryOperation, "::", location));
-                    }
-                    else
+                    } else
                         result.add(new Token(TokenType.Colon, ":", location));
                     break;
                 case ',':
@@ -99,135 +90,110 @@ public class Lexer {
                     break;
                 case '.':
                     readChar();
-                    if ((char)peekChar() == '.')
-                    {
+                    if ((char) peekChar() == '.') {
                         result.add(new Token(TokenType.BinaryOperation, "..", location));
                         readChar();
-                    }
-                    else
+                    } else
                         result.add(new Token(TokenType.BinaryOperation, ".", location));
                     break;
                 case '?':
                     readChar();
-                    if (peekChar() == '?')
-                    {
+                    if (peekChar() == '?') {
                         readChar();
                         result.add(new Token(TokenType.BinaryOperation, "??", location));
-                    }
-                    else
+                    } else
                         result.add(new Token(TokenType.Question, "?", location));
                     break;
                 case '+':
                 case '-':
-                    orig = (char)readChar();
-                    if ((char)peekChar() == orig)
-                        result.add(new Token(TokenType.UnaryOperation, Character.toString(orig) + (char)readChar(), location));
-                    else if ((char)peekChar() == '=')
-                        result.add(new Token(TokenType.Assignment, Character.toString(orig) + (char)readChar(), location));
+                    orig = (char) readChar();
+                    if ((char) peekChar() == orig)
+                        result.add(new Token(TokenType.UnaryOperation, Character.toString(orig) + (char) readChar(), location));
+                    else if ((char) peekChar() == '=')
+                        result.add(new Token(TokenType.Assignment, Character.toString(orig) + (char) readChar(), location));
                     else
                         result.add(new Token(TokenType.BinaryOperation, Character.toString(orig), location));
                     break;
                 case '*':
                 case '/':
-                    orig = (char)readChar();
-                    if ((char)peekChar() == orig)
-                        result.add(new Token(TokenType.BinaryOperation, Character.toString(orig) + (char)readChar(), location));
-                    else if ((char)peekChar() == '=')
-                        result.add(new Token(TokenType.Assignment, Character.toString(orig) + (char)readChar(), location));
+                    orig = (char) readChar();
+                    if ((char) peekChar() == orig)
+                        result.add(new Token(TokenType.BinaryOperation, Character.toString(orig) + (char) readChar(), location));
+                    else if ((char) peekChar() == '=')
+                        result.add(new Token(TokenType.Assignment, Character.toString(orig) + (char) readChar(), location));
                     else
                         result.add(new Token(TokenType.BinaryOperation, Character.toString(orig), location));
                     break;
                 case '%':
                 case '^':
-                    orig = (char)readChar();
-                    if ((char)peekChar() == '=')
-                        result.add(new Token(TokenType.Assignment, Character.toString(orig) + (char)readChar(), location));
+                    orig = (char) readChar();
+                    if ((char) peekChar() == '=')
+                        result.add(new Token(TokenType.Assignment, Character.toString(orig) + (char) readChar(), location));
                     else
                         result.add(new Token(TokenType.BinaryOperation, Character.toString(orig), location));
                     break;
                 case '|':
                     readChar();
-                    if ((char)peekChar() == '|')
-                    {
+                    if ((char) peekChar() == '|') {
                         readChar();
                         result.add(new Token(TokenType.BinaryOperation, "||", location));
-                    }
-                    else if ((char)peekChar() == '=')
-                    {
+                    } else if ((char) peekChar() == '=') {
                         readChar();
                         result.add(new Token(TokenType.Assignment, "|=", location));
-                    }
-                    else
+                    } else
                         result.add(new Token(TokenType.BinaryOperation, "|", location));
                     break;
                 case '&':
                     readChar();
-                    if ((char)peekChar() == '&')
-                    {
+                    if ((char) peekChar() == '&') {
                         readChar();
                         result.add(new Token(TokenType.BinaryOperation, "&&", location));
-                    }
-                    else if ((char)peekChar() == '=')
-                    {
+                    } else if ((char) peekChar() == '=') {
                         readChar();
                         result.add(new Token(TokenType.Assignment, "&=", location));
-                    }
-                    else
+                    } else
                         result.add(new Token(TokenType.BinaryOperation, "&", location));
                     break;
                 case '=':
                     readChar();
-                    if ((char)peekChar() == '=')
-                    {
+                    if ((char) peekChar() == '=') {
                         readChar();
                         result.add(new Token(TokenType.Comparison, "==", location));
-                    }
-                    else
+                    } else
                         result.add(new Token(TokenType.Assignment, "=", location));
                     break;
                 case '!':
                     readChar();
-                    if ((char)peekChar() == '=')
-                    {
+                    if ((char) peekChar() == '=') {
                         readChar();
                         result.add(new Token(TokenType.Comparison, "!=", location));
-                    }
-                    else
+                    } else
                         result.add(new Token(TokenType.UnaryOperation, "!", location));
                     break;
                 case '<':
                     readChar();
-                    if(peekChar() == '<')
-                    {
+                    if (peekChar() == '<') {
                         readChar();
                         result.add(new Token(TokenType.BinaryOperation, "<<", location));
-                    }
-                    else if ((char)peekChar() == '=')
-                    {
+                    } else if ((char) peekChar() == '=') {
                         readChar();
                         result.add(new Token(TokenType.Comparison, "<=", location));
-                    }
-                    else if ((char)peekChar() == '-' && (char)peekChar(1) == '>')
-                    {
-                        readChar(); readChar();
+                    } else if ((char) peekChar() == '-' && (char) peekChar(1) == '>') {
+                        readChar();
+                        readChar();
                         result.add(new Token(TokenType.BinaryOperation, "<->", location));
-                    }
-                    else
+                    } else
                         result.add(new Token(TokenType.Comparison, "<", location));
                     break;
                 case '>':
                     readChar();
-                    if (peekChar() == '>')
-                    {
+                    if (peekChar() == '>') {
                         readChar();
                         result.add(new Token(TokenType.BinaryOperation, ">>", location));
-                    }
-                    else if ((char)peekChar() == '=')
-                    {
+                    } else if ((char) peekChar() == '=') {
                         readChar();
                         result.add(new Token(TokenType.Comparison, ">=", location));
-                    }
-                    else
+                    } else
                         result.add(new Token(TokenType.Comparison, ">", location));
                     break;
                 case '[':
@@ -255,35 +221,28 @@ public class Lexer {
         whiteSpace();
     }
 
-    private void whiteSpace()
-    {
-        while (Character.isWhitespace((char)peekChar()) && peekChar() != -1)
+    private void whiteSpace() {
+        while (Character.isWhitespace((char) peekChar()) && peekChar() != -1)
             readChar();
     }
 
-    private Token scanIdentifier()
-    {
+    private Token scanIdentifier() {
         String str = "";
-        while (Character.isLetterOrDigit((char)peekChar()) || (char)peekChar() == '_' && peekChar() != -1)
-            str += (char)readChar();
-        return new Token(str == "is" ? TokenType.BinaryOperation : TokenType.Identifier, str, location);
+        while (Character.isLetterOrDigit((char) peekChar()) || (char) peekChar() == '_' && peekChar() != -1)
+            str += (char) readChar();
+        return new Token(str.equals("is") ? TokenType.BinaryOperation : TokenType.Identifier, str, location);
     }
 
-    private Token scanNumber()
-    {
+    private Token scanNumber() {
         StringBuilder str = new StringBuilder();
         boolean sep = false;
         while (peekChar() != -1 &&
-                (Character.isDigit((char) peekChar()) || "abcdefABCDEF".contains(Character.toString((char)peekChar())) || "xo-._".contains(Character.toString((char) peekChar()))))
-        {
-            char cchar = (char)readChar();
-            if(cchar == '_')
-            {
+                (Character.isDigit((char) peekChar()) || "abcdefABCDEF".contains(Character.toString((char) peekChar())) || "xo-._".contains(Character.toString((char) peekChar())))) {
+            char cchar = (char) readChar();
+            if (cchar == '_') {
                 if (sep) break;
                 sep = true;
-            }
-            else
-            {
+            } else {
                 sep = false;
                 str.append(cchar);
             }
@@ -291,47 +250,30 @@ public class Lexer {
         String finalString = str.toString();
         String bname = "";
         int bsize = 0;
-        if(finalString.startsWith("0x"))
-        {
+        if (finalString.startsWith("0x")) {
             bname = "hex";
             bsize = 16;
-        }
-            else if(finalString.startsWith("0b"))
-        {
+        } else if (finalString.startsWith("0b")) {
             bname = "binary";
             bsize = 2;
-        }
-            else if(finalString.startsWith("0o"))
-        {
+        } else if (finalString.startsWith("0o")) {
             bname = "octal";
             bsize = 8;
         }
-        if(bname != "")
-        {
-            try
-            {
+        if (bname != "") {
+            try {
                 return new Token(TokenType.Int64, Integer.toString(Integer.parseInt(finalString.substring(2), bsize)), location);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 HassiumLogger.error("Invalid " + bname + " number: " + finalString + " at " + location);
             }
-        }
-        else
-        {
-            try
-            {
+        } else {
+            try {
                 return new Token(TokenType.Int64, Long.toString(Long.parseLong(finalString)), location);
-            }
-            catch (Exception ex)
-            {
-                try
-                {
+            } catch (Exception ex) {
+                try {
                     return new Token(TokenType.Double,
                             Double.toString(Double.parseDouble(finalString)), location);
-                }
-                catch (Exception ex1)
-                {
+                } catch (Exception ex1) {
                     HassiumLogger.error("Invalid number: " + finalString + " at " + location);
                 }
             }
@@ -339,20 +281,16 @@ public class Lexer {
         return null; // Not reachable but for compilation
     }
 
-    private Token scanString(boolean isVerbatim)
-    {
+    private Token scanString(boolean isVerbatim) {
         StringBuilder str = new StringBuilder();
         readChar();
-        while ((char)peekChar() != '\"' && peekChar() != -1)
-        {
-            char ch = (char)readChar();
+        while ((char) peekChar() != '\"' && peekChar() != -1) {
+            char ch = (char) readChar();
             if (ch == '\\' && !isVerbatim)
-                str.append(scanEscapeCode((char)readChar()));
-            else if (ch == '#' && !isVerbatim && peekChar() == '{')
-            {
+                str.append(scanEscapeCode((char) readChar()));
+            else if (ch == '#' && !isVerbatim && peekChar() == '{') {
                 readChar();
-                if (peekChar() == '}')
-                {
+                if (peekChar() == '}') {
                     readChar();
                     continue;
                 }
@@ -366,8 +304,7 @@ public class Lexer {
                 result.add(new Token(TokenType.RightParentheses, ")", location));
                 result.add(new Token(TokenType.BinaryOperation, "+", location));
                 continue;
-            }
-            else
+            } else
                 str.append(ch);
         }
         readChar();
@@ -375,25 +312,21 @@ public class Lexer {
         return new Token(TokenType.String, str.toString(), location);
     }
 
-    private void scanSingleComment()
-    {
+    private void scanSingleComment() {
         readChar();
         while (peekChar() != -1 && peekChar() != '\n')
             readChar();
     }
 
-    private void scanMultilineComment()
-    {
+    private void scanMultilineComment() {
         readChar();
-        while(peekChar() != -1 && peekChar() != '$')
+        while (peekChar() != -1 && peekChar() != '$')
             readChar();
         readChar();
     }
 
-    private char scanEscapeCode(char escape)
-    {
-        switch (escape)
-        {
+    private char scanEscapeCode(char escape) {
+        switch (escape) {
             case '\\':
                 return '\\';
             case '"':
@@ -422,12 +355,11 @@ public class Lexer {
         return peekChar(0);
     }
 
-    private int peekChar(int n)
-    {
+    private int peekChar(int n) {
         return position + n < code.length() ? code.toCharArray()[position + n] : -1;
     }
-    private int readChar()
-    {
+
+    private int readChar() {
         if (position >= code.length())
             return -1;
         if (peekChar() == '\n')

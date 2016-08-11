@@ -33,7 +33,7 @@ public class HassiumClosure extends HassiumObject {
         this.method = method;
         this.frame = frame;
         try {
-            Attributes.put(HassiumObject.INVOKE_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__invoke__"), this, -1));
+            Attributes.put(HassiumObject.INVOKE_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__invoke__", VirtualMachine.class, HassiumObject[].class), this, -1));
         } catch (NoSuchMethodException e) {
             HassiumLogger.error("Internal error HassiumClosure : " + e.getMessage());
         }

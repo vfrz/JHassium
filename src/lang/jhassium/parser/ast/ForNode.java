@@ -15,8 +15,7 @@ import lang.jhassium.parser.Parser;
  */
 public class ForNode extends AstNode {
 
-    public ForNode(AstNode singleStatement, AstNode predicate, AstNode repeatStatement, AstNode body, SourceLocation location)
-    {
+    public ForNode(AstNode singleStatement, AstNode predicate, AstNode repeatStatement, AstNode body, SourceLocation location) {
         Children.add(singleStatement);
         Children.add(predicate);
         Children.add(repeatStatement);
@@ -24,7 +23,7 @@ public class ForNode extends AstNode {
         Location = location;
     }
 
-    public AstNode getSingleStatement(){
+    public AstNode getSingleStatement() {
         return Children.get(0);
     }
 
@@ -40,8 +39,7 @@ public class ForNode extends AstNode {
         return Children.get(3);
     }
 
-    public static ForNode parse(Parser parser)
-    {
+    public static ForNode parse(Parser parser) {
         parser.expectToken(TokenType.Identifier, "for");
         parser.expectToken(TokenType.LeftParentheses);
         AstNode singleStatement = ExpressionStatementNode.parse(parser);

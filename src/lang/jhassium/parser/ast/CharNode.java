@@ -15,13 +15,12 @@ public class CharNode extends AstNode {
 
     private char charChar;
 
-    public CharNode(String ch, SourceLocation location)
-    {
+    public CharNode(String ch, SourceLocation location) {
         charChar = ch.charAt(0);
         Location = location;
     }
 
-    public char getChar(){
+    public char getChar() {
         return charChar;
     }
 

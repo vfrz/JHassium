@@ -3,7 +3,7 @@ package lang.jhassium.codegen;
 import lang.jhassium.runtime.standardlibrary.HassiumObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -17,13 +17,13 @@ public class HassiumModule extends HassiumObject {
 
     private String name;
     public List<HassiumObject> ConstantPool;
-    public HashMap<Integer, HassiumObject> Globals;
+    public LinkedHashMap<Integer, HassiumObject> Globals;
     public List<String> Imports;
 
     public HassiumModule(String name) {
         this.name = name;
         ConstantPool = new ArrayList<>();
-        Globals = new HashMap<>();
+        Globals = new LinkedHashMap<>();
         Imports = new ArrayList<>();
     }
 

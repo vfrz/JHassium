@@ -14,7 +14,7 @@ public class SymbolTable {
     private Stack<Scope> scopes = new Stack<>();
     private Scope globalScope = new Scope();
 
-    public int NextIndex = 0;
+    private int nextIndex = 0;
     private int nextGlobalIndex = 0;
 
     public SymbolTable() {
@@ -32,7 +32,7 @@ public class SymbolTable {
     public void popScope() {
         scopes.pop();
         if (scopes.size() == 2)
-            NextIndex = 0;
+            nextIndex = 0;
     }
 
     public int getIndex(String name) {
@@ -60,8 +60,8 @@ public class SymbolTable {
     }
 
     public int addSymbol(String name) {
-        scopes.peek().addSymbol(name, NextIndex);
-        return NextIndex++;
+        scopes.peek().addSymbol(name, nextIndex);
+        return nextIndex++;
     }
 
     public int addGlobalSymbol(String name) {

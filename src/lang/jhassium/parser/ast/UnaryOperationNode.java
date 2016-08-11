@@ -17,7 +17,7 @@ public class UnaryOperationNode extends AstNode {
     private UnaryOperation unaryOperation;
 
     public UnaryOperationNode(UnaryOperation unaryOperation, AstNode body, SourceLocation location) {
-        unaryOperation = unaryOperation;
+        this.unaryOperation = unaryOperation;
         Children.add(body);
         Location = location;
     }

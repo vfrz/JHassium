@@ -26,13 +26,13 @@ public class HassiumTuple extends HassiumObject {
         value = elements;
 
         try {
-            Attributes.put("length", new HassiumProperty(this.getClass().getDeclaredMethod("get_Length"), this));
-            Attributes.put("split", new HassiumFunction(this.getClass().getDeclaredMethod("split"), this, 2));
-            Attributes.put(HassiumObject.EQUALS_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__equals__"), this, 1));
-            Attributes.put(HassiumObject.NOT_EQUAL_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__notequals__"), this, 1));
-            Attributes.put(HassiumObject.INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__index__"), this, 1));
-            Attributes.put(HassiumObject.ITER_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__iter__"), this, 0));
-            Attributes.put(HassiumObject.TOSTRING_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__tostring__"), this, 0));
+            Attributes.put("length", new HassiumProperty(this.getClass().getDeclaredMethod("get_Length", VirtualMachine.class, HassiumObject[].class), this));
+            Attributes.put("split", new HassiumFunction(this.getClass().getDeclaredMethod("split", VirtualMachine.class, HassiumObject[].class), this, 2));
+            Attributes.put(HassiumObject.EQUALS_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__equals__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.NOT_EQUAL_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__notequals__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__index__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.ITER_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__iter__", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put(HassiumObject.TOSTRING_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__tostring__", VirtualMachine.class, HassiumObject[].class), this, 0));
         } catch (NoSuchMethodException e) {
             HassiumLogger.error("Internal error HassiumBool : " + e.getMessage());
         }
@@ -40,11 +40,11 @@ public class HassiumTuple extends HassiumObject {
         addType(HassiumTuple.TypeDefinition);
     }
 
-    private HassiumInt get_Length(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumInt get_Length(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumInt(value.length);
     }
 
-    private HassiumTuple split(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumTuple split(VirtualMachine vm, HassiumObject[] args) {
         int min = HassiumInt.create(args[0]).getValue().intValue();
         int max = HassiumInt.create(args[1]).getValue().intValue();
 
@@ -56,7 +56,7 @@ public class HassiumTuple extends HassiumObject {
         return new HassiumTuple(elements);
     }
 
-    private HassiumBool __equals__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumBool __equals__(VirtualMachine vm, HassiumObject[] args) {
         HassiumList list = HassiumList.Create(args[0].iter(vm));
         for (int i = 0; i < list.getValue().size(); i++)
             if (!list.getValue().get(i).equals(vm, value[i]).getValue())
@@ -64,11 +64,11 @@ public class HassiumTuple extends HassiumObject {
         return new HassiumBool(true);
     }
 
-    private HassiumBool __notequals__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumBool __notequals__(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumBool(!__equals__(vm, args).getValue());
     }
 
-    private HassiumObject __index__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __index__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumDouble)
             return value[((HassiumDouble) obj).getValueInt()];
@@ -78,7 +78,7 @@ public class HassiumTuple extends HassiumObject {
         return null; //Not reachable but for compilation
     }
 
-    private HassiumString __tostring__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString __tostring__(VirtualMachine vm, HassiumObject[] args) {
         StringBuilder sb = new StringBuilder();
         for (HassiumObject obj : value)
             sb.append(obj.toString(vm));
@@ -86,7 +86,7 @@ public class HassiumTuple extends HassiumObject {
         return new HassiumString(sb.toString());
     }
 
-    private HassiumList __iter__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumList __iter__(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumList(value);
     }
 

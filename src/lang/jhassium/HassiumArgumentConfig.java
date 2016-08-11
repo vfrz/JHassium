@@ -20,17 +20,12 @@ public class HassiumArgumentConfig {
     public String SourceFile;
     public List<String> HassiumArgs;
 
-    public static void executeConfig(HassiumArgumentConfig config)
-    {
-        if (config.CreatePackage)
-        {
+    public static void executeConfig(HassiumArgumentConfig config) {
+        if (config.CreatePackage) {
             HassiumIO.writeAllText("manifest.conf", config.SourceFile);
             HassiumIO.createZip(HassiumIO.getCurrentDirectory().toString(), HassiumIO.getCurrentDirectory().getParent().toString() + "/" + config.PackageFile);
-        }
-        else
-        {
-            if (config.SourceFile.endsWith(".pkg"))
-            {
+        } else {
+            if (config.SourceFile.endsWith(".pkg")) {
                 String path = HassiumIO.getCurrentDirectory().toString() + "/.pkg";
                 if (Files.isDirectory(Paths.get(path)))
                     HassiumIO.deleteFolder(path);
@@ -38,8 +33,7 @@ public class HassiumArgumentConfig {
                 HassiumIO.unzip(config.SourceFile, path);
                 HassiumExecuter.fromFilePath(HassiumIO.readAllText("manifest.conf"), config.HassiumArgs);
                 HassiumIO.deleteFolder(path);
-            }
-            else
+            } else
                 HassiumExecuter.fromFilePath(config.SourceFile, config.HassiumArgs);
         }
     }

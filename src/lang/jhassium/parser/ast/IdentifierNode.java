@@ -15,13 +15,12 @@ public class IdentifierNode extends AstNode {
 
     private String identifier;
 
-    public IdentifierNode(String identifier, SourceLocation location)
-    {
+    public IdentifierNode(String identifier, SourceLocation location) {
         this.identifier = identifier;
         Location = location;
     }
 
-    public String getIdentifier(){
+    public String getIdentifier() {
         return identifier;
     }
 

@@ -15,13 +15,11 @@ import lang.jhassium.parser.Parser;
  */
 public class StatementNode extends AstNode {
 
-    public StatementNode(SourceLocation location)
-    {
+    public StatementNode(SourceLocation location) {
         Location = location;
     }
 
-    public static AstNode parse(Parser parser)
-    {
+    public static AstNode parse(Parser parser) {
         if (parser.matchToken(TokenType.Identifier, "func"))
             return FuncNode.parse(parser);
         else if (parser.matchToken(TokenType.Identifier, "class"))
@@ -56,29 +54,24 @@ public class StatementNode extends AstNode {
             return TryCatchNode.parse(parser);
         else if (parser.matchToken(TokenType.Identifier, "raise"))
             return RaiseNode.parse(parser);
-        else if (parser.acceptToken(TokenType.LeftBrace))
-        {
+        else if (parser.acceptToken(TokenType.LeftBrace)) {
             CodeBlockNode block = new CodeBlockNode(parser.getLocation());
-            while (!parser.acceptToken(TokenType.RightBrace))
-            {
+            while (!parser.acceptToken(TokenType.RightBrace)) {
                 block.Children.add(StatementNode.parse(parser));
                 parser.acceptToken(TokenType.Semicolon);
             }
             return block;
-        }
-        else if (parser.matchToken(TokenType.Identifier) && parser.getToken(1).getTokenType() == TokenType.LeftBrace)
+        } else if (parser.matchToken(TokenType.Identifier) && parser.getToken(1).getTokenType() == TokenType.LeftBrace)
             return PropertyNode.parse(parser);
         else
             return ExpressionStatementNode.parse(parser);
     }
 
-    public void visit(IVisitor visitor)
-    {
+    public void visit(IVisitor visitor) {
         visitor.accept(this);
     }
 
-    public void visitChildren(IVisitor visitor)
-    {
+    public void visitChildren(IVisitor visitor) {
         for (AstNode child : Children)
             child.visit(visitor);
     }

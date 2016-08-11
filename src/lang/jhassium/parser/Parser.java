@@ -21,8 +21,7 @@ public class Parser {
     public int Position;
     private List<Token> tokens;
 
-    public AstNode Parse(List<Token> tokens)
-    {
+    public AstNode Parse(List<Token> tokens) {
         Position = 0;
         this.tokens = tokens;
         CodeBlockNode ast = new CodeBlockNode(getLocation());
@@ -39,24 +38,22 @@ public class Parser {
         return Position < tokens.size() ? tokens.get(Position).getSourceLocation() : tokens.get(Position - 1).getSourceLocation();
     }
 
-    public boolean matchToken(TokenType tokenType)
-    {
+    public boolean matchToken(TokenType tokenType) {
         return Position < tokens.size() && tokens.get(Position).getTokenType() == tokenType;
     }
-    public boolean matchToken(TokenType tokenType, String value)
-    {
-        return Position < tokens.size() && tokens.get(Position).getTokenType() == tokenType && tokens.get(Position).getValue() == value;
+
+    public boolean matchToken(TokenType tokenType, String value) {
+        return Position < tokens.size() && tokens.get(Position).getTokenType() == tokenType && tokens.get(Position).getValue().equals(value);
     }
 
-    public boolean acceptToken(TokenType tokenType)
-    {
+    public boolean acceptToken(TokenType tokenType) {
         boolean matches = matchToken(tokenType);
         if (matches)
             Position++;
         return matches;
     }
-    public boolean acceptToken(TokenType tokenType, String value)
-    {
+
+    public boolean acceptToken(TokenType tokenType, String value) {
         boolean matches = matchToken(tokenType, value);
         if (matches)
             Position++;
@@ -81,8 +78,7 @@ public class Parser {
         return getToken(0);
     }
 
-    public Token getToken(int n)
-    {
+    public Token getToken(int n) {
         if (Position < tokens.size())
             return tokens.get(Position + n);
         else

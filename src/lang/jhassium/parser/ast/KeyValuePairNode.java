@@ -13,8 +13,7 @@ import lang.jhassium.parser.IVisitor;
  */
 public class KeyValuePairNode extends AstNode {
 
-    public KeyValuePairNode(AstNode left, AstNode right, SourceLocation location)
-    {
+    public KeyValuePairNode(AstNode left, AstNode right, SourceLocation location) {
         Children.add(left);
         Children.add(right);
         Location = location;

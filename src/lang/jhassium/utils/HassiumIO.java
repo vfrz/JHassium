@@ -1,6 +1,5 @@
 package lang.jhassium.utils;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
@@ -8,10 +7,8 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.util.Enumeration;
-import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -84,7 +81,7 @@ public class HassiumIO {
         }
 
         File outputFile = new File(outputDir, entry.getName());
-        if (!outputFile.getParentFile().exists()){
+        if (!outputFile.getParentFile().exists()) {
             createFolder(outputFile.getParentFile().getAbsolutePath());
         }
 
@@ -100,7 +97,7 @@ public class HassiumIO {
     }
 
     public static void createFolder(String folder) {
-        if(!new File(folder).mkdirs()) HassiumLogger.error("Error while creating folder : " + folder);
+        if (!new File(folder).mkdirs()) HassiumLogger.error("Error while creating folder : " + folder);
     }
 
     public static void deleteFolder(String folder) {
@@ -114,7 +111,6 @@ public class HassiumIO {
     public static File getCurrentDirectory() {
         return new File(Paths.get(".").toAbsolutePath().normalize().toString());
     }
-
 
 
 }

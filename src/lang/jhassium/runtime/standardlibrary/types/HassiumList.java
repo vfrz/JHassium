@@ -37,43 +37,43 @@ public class HassiumList extends HassiumObject {
         for (HassiumObject obj : initial) value.add(obj);
 
         try {
-            Attributes.put("add", new HassiumFunction(this.getClass().getDeclaredMethod("_add"), this, -1));
-            Attributes.put("contains", new HassiumFunction(this.getClass().getDeclaredMethod("contains"), this, -1));
-            Attributes.put("copy", new HassiumFunction(this.getClass().getDeclaredMethod("copy"), this, 1));
+            Attributes.put("add", new HassiumFunction(this.getClass().getDeclaredMethod("_add", VirtualMachine.class, HassiumObject[].class), this, -1));
+            Attributes.put("contains", new HassiumFunction(this.getClass().getDeclaredMethod("contains", VirtualMachine.class, HassiumObject[].class), this, -1));
+            Attributes.put("copy", new HassiumFunction(this.getClass().getDeclaredMethod("copy", VirtualMachine.class, HassiumObject[].class), this, 1));
             Attributes.put("Event", new HassiumEvent());
-            Attributes.put("getString", new HassiumFunction(this.getClass().getDeclaredMethod("getString"), this, 0));
-            Attributes.put("indexOf", new HassiumFunction(this.getClass().getDeclaredMethod("indexOf"), this, 1));
-            Attributes.put("lastIndexOf", new HassiumFunction(this.getClass().getDeclaredMethod("lastIndexOf"), this, 1));
-            Attributes.put("length", new HassiumProperty(this.getClass().getDeclaredMethod("get_Length"), this));
-            Attributes.put("remove", new HassiumFunction(this.getClass().getDeclaredMethod("remove"), this, -1));
-            Attributes.put("reverse", new HassiumFunction(this.getClass().getDeclaredMethod("reverse"), this, 0));
-            Attributes.put("slice", new HassiumFunction(this.getClass().getDeclaredMethod("slice"), this, new int[]{1, 2}));
+            Attributes.put("getString", new HassiumFunction(this.getClass().getDeclaredMethod("getString", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put("indexOf", new HassiumFunction(this.getClass().getDeclaredMethod("indexOf", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put("lastIndexOf", new HassiumFunction(this.getClass().getDeclaredMethod("lastIndexOf", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put("length", new HassiumProperty(this.getClass().getDeclaredMethod("get_Length", VirtualMachine.class, HassiumObject[].class), this));
+            Attributes.put("remove", new HassiumFunction(this.getClass().getDeclaredMethod("remove", VirtualMachine.class, HassiumObject[].class), this, -1));
+            Attributes.put("reverse", new HassiumFunction(this.getClass().getDeclaredMethod("reverse", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put("slice", new HassiumFunction(this.getClass().getDeclaredMethod("slice", VirtualMachine.class, HassiumObject[].class), this, new int[]{1, 2}));
             //Attributes.put("Thread", new HassiumThread());
-            Attributes.put(HassiumObject.CONTAINS, new HassiumFunction(this.getClass().getDeclaredMethod("contains"), this, 1));
-            Attributes.put(HassiumObject.TOSTRING_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__tostring__"), this, 0));
-            Attributes.put(HassiumObject.EQUALS_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__equals__"), this, 1));
-            Attributes.put(HassiumObject.NOT_EQUAL_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__notequals__"), this, 1));
-            Attributes.put(HassiumObject.INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__index__"), this, 1));
-            Attributes.put(HassiumObject.STORE_INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__storeindex__"), this, 2));
-            Attributes.put(HassiumObject.ITER_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__iter__"), this, 0));
-            Attributes.put(HassiumObject.SLICE_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("slice"), this, 2));
-            Attributes.put(HassiumObject.SKIP_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("skip"), this, 1));
-            Attributes.put(HassiumObject.ADD_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__add__"), this, 1));
-            Attributes.put(HassiumObject.ENUMERABLE_FULL, new HassiumFunction(this.getClass().getDeclaredMethod("__enumerablefull__"), this, 0));
-            Attributes.put(HassiumObject.ENUMERABLE_NEXT, new HassiumFunction(this.getClass().getDeclaredMethod("__enumerablenext__"), this, 0));
-            Attributes.put(HassiumObject.ENUMERABLE_RESET, new HassiumFunction(this.getClass().getDeclaredMethod("__enumerablereset__"), this, 0));
+            Attributes.put(HassiumObject.CONTAINS, new HassiumFunction(this.getClass().getDeclaredMethod("contains", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.TOSTRING_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__tostring__", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put(HassiumObject.EQUALS_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__equals__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.NOT_EQUAL_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__notequals__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__index__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.STORE_INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__storeindex__", VirtualMachine.class, HassiumObject[].class), this, 2));
+            Attributes.put(HassiumObject.ITER_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__iter__", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put(HassiumObject.SLICE_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("slice", VirtualMachine.class, HassiumObject[].class), this, 2));
+            Attributes.put(HassiumObject.SKIP_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("skip", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.ADD_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__add__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.ENUMERABLE_FULL, new HassiumFunction(this.getClass().getDeclaredMethod("__enumerablefull__", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put(HassiumObject.ENUMERABLE_NEXT, new HassiumFunction(this.getClass().getDeclaredMethod("__enumerablenext__", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put(HassiumObject.ENUMERABLE_RESET, new HassiumFunction(this.getClass().getDeclaredMethod("__enumerablereset__", VirtualMachine.class, HassiumObject[].class), this, 0));
         } catch (NoSuchMethodException e) {
-            HassiumLogger.error("Internal error HassiumChar : " + e.getMessage());
+            HassiumLogger.error("Internal error HassiumList : " + e.getMessage());
         }
         addType(HassiumList.TypeDefinition);
     }
 
-    private HassiumObject _add(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject _add(VirtualMachine vm, HassiumObject[] args) {
         for (HassiumObject obj : args) value.add(obj);
         return HassiumObject.Null;
     }
 
-    private HassiumBool contains(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumBool contains(VirtualMachine vm, HassiumObject[] args) {
         for (HassiumObject obj : args) {
             for (HassiumObject x : value) {
                 if (!x.equals(vm, obj).getValue())
@@ -83,7 +83,7 @@ public class HassiumList extends HassiumObject {
         return new HassiumBool(true);
     }
 
-    private HassiumNull copy(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumNull copy(VirtualMachine vm, HassiumObject[] args) {
         HassiumList list = HassiumList.Create(args[0]);
         for (HassiumObject obj : value) {
             list.add(vm, obj);
@@ -91,44 +91,44 @@ public class HassiumList extends HassiumObject {
         return HassiumObject.Null;
     }
 
-    private HassiumString getString(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString getString(VirtualMachine vm, HassiumObject[] args) {
         byte[] bytes = new byte[value.size()];
         for (int i = 0; i < bytes.length; i++)
             bytes[i] = (byte) (char) HassiumChar.create(value.get(i)).getValue();
-        return new HassiumString(new String(bytes)); //HACK Verify charset
+        return new HassiumString(new String(bytes));
     }
 
-    private HassiumDouble indexOf(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumDouble indexOf(VirtualMachine vm, HassiumObject[] args) {
         for (int i = 0; i < value.size(); i++)
             if (value.get(i).equals(vm, args[0]).getValue())
                 return new HassiumDouble(i);
         return new HassiumDouble(-1);
     }
 
-    private HassiumDouble lastIndexOf(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumDouble lastIndexOf(VirtualMachine vm, HassiumObject[] args) {
         for (int i = value.size() - 1; i >= 0; i--)
             if (value.get(i).equals(vm, args[0]).getValue())
                 return new HassiumDouble(i);
         return new HassiumDouble(-1);
     }
 
-    private HassiumInt get_Length(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumInt get_Length(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumInt(value.size());
     }
 
-    private HassiumNull remove(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumNull remove(VirtualMachine vm, HassiumObject[] args) {
         for (HassiumObject obj : args) value.remove(obj);
         return HassiumObject.Null;
     }
 
-    private HassiumList reverse(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumList reverse(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject[] elements = new HassiumObject[value.size()];
         for (int i = 0; i < elements.length; i++)
             elements[i] = value.get(value.size() - (i + 1));
         return new HassiumList(elements);
     }
 
-    private HassiumList skip(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumList skip(VirtualMachine vm, HassiumObject[] args) {
         HassiumList list = new HassiumList(new HassiumObject[0]);
         int step = (int) (long) HassiumInt.create(args[0]).getValue();
         if (step == -1)
@@ -138,7 +138,7 @@ public class HassiumList extends HassiumObject {
         return list;
     }
 
-    private HassiumList slice(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumList slice(VirtualMachine vm, HassiumObject[] args) {
         HassiumList list = new HassiumList(new HassiumObject[0]);
 
         int max = args.length == 2 ? (int) (long) HassiumInt.create(args[1]).getValue() : list.getValue().size();
@@ -149,13 +149,13 @@ public class HassiumList extends HassiumObject {
         return list;
     }
 
-    private HassiumString __tostring__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString __tostring__(VirtualMachine vm, HassiumObject[] args) {
         StringBuilder sb = new StringBuilder();
         for (HassiumObject obj : value) sb.append(obj.toString(vm) + " ");
         return new HassiumString(sb.toString());
     }
 
-    private HassiumBool __equals__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumBool __equals__(VirtualMachine vm, HassiumObject[] args) {
         HassiumList list = HassiumList.Create(args[0].iter(vm));
         for (int i = 0; i < list.getValue().size(); i++) {
             if (!list.getValue().get(i).equals(vm, value.get(i)).getValue())
@@ -164,11 +164,11 @@ public class HassiumList extends HassiumObject {
         return new HassiumBool(true);
     }
 
-    private HassiumBool __notequals__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumBool __notequals__(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumBool(!__equals__(vm, args).getValue());
     }
 
-    private HassiumObject __index__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __index__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumDouble)
             return value.get(((HassiumDouble) obj).getValueInt());
@@ -178,7 +178,7 @@ public class HassiumList extends HassiumObject {
         return null; // Not reachable but for compilation
     }
 
-    private HassiumObject __storeindex__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __storeindex__(VirtualMachine vm, HassiumObject[] args) {
         int index = 0;
         if (args[0] instanceof HassiumInt)
             index = (int) (long) ((HassiumInt) args[0]).getValue();
@@ -190,7 +190,7 @@ public class HassiumList extends HassiumObject {
         return args[1];
     }
 
-    private HassiumList __add__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumList __add__(VirtualMachine vm, HassiumObject[] args) {
         HassiumList copy = Helpers.as(this.clone(), HassiumList.class);
         copy.value.add(args[0]);
         return copy;
@@ -198,19 +198,19 @@ public class HassiumList extends HassiumObject {
 
     public int EnumerableIndex = 0;
 
-    private HassiumObject __iter__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __iter__(VirtualMachine vm, HassiumObject[] args) {
         return this;
     }
 
-    private HassiumObject __enumerablefull__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __enumerablefull__(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumBool(EnumerableIndex >= value.size());
     }
 
-    private HassiumObject __enumerablenext__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __enumerablenext__(VirtualMachine vm, HassiumObject[] args) {
         return value.get(EnumerableIndex++);
     }
 
-    private HassiumObject __enumerablereset__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __enumerablereset__(VirtualMachine vm, HassiumObject[] args) {
         EnumerableIndex = 0;
         return HassiumObject.Null;
     }

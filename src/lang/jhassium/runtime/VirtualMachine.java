@@ -5,7 +5,6 @@ import lang.jhassium.codegen.HassiumModule;
 import lang.jhassium.codegen.InstructionType;
 import lang.jhassium.codegen.MethodBuilder;
 import lang.jhassium.codegen.UserDefinedProperty;
-import lang.jhassium.runtime.standardlibrary.GlobalFunctions;
 import lang.jhassium.runtime.standardlibrary.HassiumExtend;
 import lang.jhassium.runtime.standardlibrary.HassiumObject;
 import lang.jhassium.runtime.standardlibrary.HassiumTrait;
@@ -16,7 +15,7 @@ import lang.jhassium.utils.Helpers;
 import java.util.*;
 
 import static lang.jhassium.runtime.standardlibrary.GlobalFunctions.FunctionList;
-import static lang.jhassium.runtime.standardlibrary.types.HassiumTypesModule.*;
+import static lang.jhassium.runtime.standardlibrary.types.HassiumTypesModule.Instance;
 
 /**
  * File : VirtualMachine.java
@@ -39,7 +38,7 @@ public class VirtualMachine {
         return callStack;
     }
 
-    public HashMap<String, HassiumObject> getGlobals() {
+    public LinkedHashMap<String, HassiumObject> getGlobals() {
         return globals;
     }
 
@@ -60,14 +59,13 @@ public class VirtualMachine {
     private Stack<String> callStack = new Stack<>();
     private Stack<HassiumExceptionHandler> handlers = new Stack<HassiumExceptionHandler>();
 
-    private HashMap<String, HassiumObject> globals;
+    private LinkedHashMap<String, HassiumObject> globals;
     private HassiumModule module;
     private SourceLocation sourceLocation;
-    private HashMap<MethodBuilder, Integer> exceptionReturns = new HashMap<>();
+    private LinkedHashMap<MethodBuilder, Integer> exceptionReturns = new LinkedHashMap<>();
 
-    public void execute(HassiumModule module, List<String> args)
-    {
-        globals = new HashMap<>();
+    public void execute(HassiumModule module, List<String> args) {
+        globals = new LinkedHashMap<>();
         stack = new Stack<>();
         stackFrame = new StackFrame();
         this.module = module;
@@ -77,38 +75,33 @@ public class VirtualMachine {
 
         callStack.push("func main ()");
         stackFrame.enterFrame();
-        executeMethod((MethodBuilder)module.Attributes.get("main"));
+        executeMethod((MethodBuilder) module.Attributes.get("main"));
         stackFrame.popFrame();
         callStack.pop();
     }
 
-    public HassiumObject executeMethod(MethodBuilder method)
-    {
+    public HassiumObject executeMethod(MethodBuilder method) {
         gatherLabels(method);
-        for (int position = 0; position < method.Instructions.size(); position++)
-        {
-            if (exceptionReturns.containsKey(method))
-            {
+        for (int position = 0; position < method.Instructions.size(); position++) {
+            if (exceptionReturns.containsKey(method)) {
                 position = exceptionReturns.get(method);
                 exceptionReturns.remove(method);
             }
 
             HassiumObject left, right, value, list, index, location;
             double argument = method.Instructions.get(position).getArgument();
-            int argumentInt = (int)argument;
+            int argumentInt = (int) argument;
             sourceLocation = method.Instructions.get(position).getSourceLocation();
             String attribute;
-            try
-            {
-                switch (method.Instructions.get(position).getInstructionType())
-                {
+            try {
+                switch (method.Instructions.get(position).getInstructionType()) {
                     case Binary_Operation:
                         right = stack.pop();
                         left = stack.pop();
                         executeBinaryOperation(left, right, argumentInt);
                         break;
                     case Build_Closure:
-                        stack.push(new HassiumClosure((MethodBuilder)stack.pop(), stackFrame.Frames.peek()));
+                        stack.push(new HassiumClosure((MethodBuilder) stack.pop(), stackFrame.Frames.peek()));
                         break;
                     case Call:
                         HassiumObject target = stack.pop();
@@ -154,11 +147,11 @@ public class VirtualMachine {
                         position = method.Labels.get(argument);
                         break;
                     case Jump_If_True:
-                        if (((HassiumBool)stack.pop()).getValue())
+                        if (((HassiumBool) stack.pop()).getValue())
                             position = method.Labels.get(argument);
                         break;
                     case Jump_If_False:
-                        if (!((HassiumBool)stack.pop()).getValue())
+                        if (!((HassiumBool) stack.pop()).getValue())
                             position = method.Labels.get(argument);
                         break;
                     case Key_Value_Pair:
@@ -170,18 +163,15 @@ public class VirtualMachine {
                         attribute = module.ConstantPool.get(argumentInt).toString(this);
                         location = stack.pop();
                         HassiumObject attrib = null;
-                        try
-                        {
+                        try {
                             attrib = location.Attributes.get(attribute);
-                        }
-                        catch (Exception ex)
-                        {
+                        } catch (Exception ex) {
                             HassiumLogger.error(location.type().toString(this) + " does not contain a definition for " + attribute);
                         }
                         if (attrib instanceof HassiumProperty)
                             stack.push((attrib).invoke(this, new HassiumObject[0]));
                         else if (attrib instanceof UserDefinedProperty)
-                            stack.push(executeMethod(((UserDefinedProperty)attrib).GetMethod));
+                            stack.push(executeMethod(((UserDefinedProperty) attrib).GetMethod));
                         else
                             stack.push(attrib);
                         break;
@@ -218,7 +208,7 @@ public class VirtualMachine {
                         stack.push(new HassiumBool(argument == 1));
                         break;
                     case Push_Handler:
-                        HassiumExceptionHandler handler = (HassiumExceptionHandler)module.ConstantPool.get(argumentInt);
+                        HassiumExceptionHandler handler = (HassiumExceptionHandler) module.ConstantPool.get(argumentInt);
                         handler.Frame = stackFrame.Frames.peek();
                         handlers.push(handler);
                         break;
@@ -245,26 +235,19 @@ public class VirtualMachine {
                     case Store_Attribute:
                         location = stack.pop();
                         attribute = module.ConstantPool.get(argumentInt).toString(this);
-                        if (location instanceof HassiumProperty)
-                    {
-                        HassiumProperty builtinProp = Helpers.as(location, HassiumProperty.class);
-                        builtinProp.invoke(this, new HassiumObject[] { stack.pop() });
-                    }
-                            else if (location instanceof UserDefinedProperty)
-                    {
-                        UserDefinedProperty userProp = Helpers.as(location, UserDefinedProperty.class);
-                        userProp.SetMethod.invoke(this, new HassiumObject[] { stack.pop() });
-                    }
-                            else
-                    try
-                    {
-                        location.Attributes.put(attribute, stack.pop());
-                    }
-                    catch (Exception ex)
-                    {
-                        HassiumLogger.error(location + " does not contain a definition for " + attribute);
-                    }
-                    break;
+                        if (location instanceof HassiumProperty) {
+                            HassiumProperty builtinProp = Helpers.as(location, HassiumProperty.class);
+                            builtinProp.invoke(this, new HassiumObject[]{stack.pop()});
+                        } else if (location instanceof UserDefinedProperty) {
+                            UserDefinedProperty userProp = Helpers.as(location, UserDefinedProperty.class);
+                            userProp.SetMethod.invoke(this, new HassiumObject[]{stack.pop()});
+                        } else
+                            try {
+                                location.Attributes.put(attribute, stack.pop());
+                            } catch (Exception ex) {
+                                HassiumLogger.error(location + " does not contain a definition for " + attribute);
+                            }
+                        break;
                     case Store_Global_Variable:
                         module.Globals.put(argumentInt, stack.pop());
                         break;
@@ -285,19 +268,15 @@ public class VirtualMachine {
                         executeUnaryOperation(stack.pop(), argumentInt);
                         break;
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 raiseException(new HassiumString(ex.getMessage()), method);
             }
         }
         return HassiumObject.Null;
     }
 
-    private void executeBinaryOperation(HassiumObject left, HassiumObject right, int argument)
-    {
-        switch (argument)
-        {
+    private void executeBinaryOperation(HassiumObject left, HassiumObject right, int argument) {
+        switch (argument) {
             case 0:
                 stack.push(left.add(this, right));
                 break;
@@ -311,7 +290,7 @@ public class VirtualMachine {
                 stack.push(left.div(this, right));
                 break;
             case 4:
-                stack.push(new HassiumInt((long)Math.floor((double)left.div(this, right).getValue())));
+                stack.push(new HassiumInt((long) Math.floor((double) left.div(this, right).getValue())));
                 break;
             case 5:
                 stack.push(left.mod(this, right));
@@ -366,32 +345,28 @@ public class VirtualMachine {
                 break;
             case 22:
                 if (right instanceof HassiumTrait)
-                stack.push(new HassiumBool(((HassiumTrait)right).MatchesTrait(this, left)));
-                    else
-                stack.push(new HassiumBool(left.Types.contains(right.type())));
+                    stack.push(new HassiumBool(((HassiumTrait) right).MatchesTrait(this, left)));
+                else
+                    stack.push(new HassiumBool(left.Types.contains(right.type())));
                 break;
             case 23:
-                stack.push(FunctionList.get("range").invoke(this, new HassiumObject[] { left, right }));
+                stack.push(FunctionList.get("range").invoke(this, new HassiumObject[]{left, right}));
                 break;
         }
     }
 
-    public void raiseException(HassiumObject message, MethodBuilder method)
-    {
+    public void raiseException(HassiumObject message, MethodBuilder method) {
         if (handlers.size() == 0)
             HassiumLogger.error(message.toString(this) + " At " + sourceLocation);
-        else
-        {
+        else {
             HassiumExceptionHandler handler = Helpers.as(handlers.peek(), HassiumExceptionHandler.class);
-            handler.invoke(this, new HassiumObject[] { message });
+            handler.invoke(this, new HassiumObject[]{message});
             exceptionReturns.put(handler.getSourceMethod(), handler.getSourceMethod().Labels.get(handler.getLabel()));
         }
     }
 
-    private void executeUnaryOperation(HassiumObject target, int argument)
-    {
-        switch (argument)
-        {
+    private void executeUnaryOperation(HassiumObject target, int argument) {
+        switch (argument) {
             case 0:
                 stack.push(target.not(this));
                 break;
@@ -404,21 +379,17 @@ public class VirtualMachine {
         }
     }
 
-    private void gatherLabels(MethodBuilder method)
-    {
-        method.Labels = new HashMap<>();
-        for (int i = 0; i < method.Instructions.size(); i++)
-        {
+    private void gatherLabels(MethodBuilder method) {
+        method.Labels = new LinkedHashMap<>();
+        for (int i = 0; i < method.Instructions.size(); i++) {
             //          Console.WriteLine(method.Instructions[i].InstructionType + "\t" + method.Instructions[i].Argument);
             if (method.Instructions.get(i).getInstructionType() == InstructionType.Label)
                 method.Labels.put(method.Instructions.get(i).getArgument(), i);
         }
     }
 
-    private void gatherGlobals(List<HassiumObject> constantPool)
-    {
-        for (int i = 0; i < constantPool.size(); i++)
-        {
+    private void gatherGlobals(List<HassiumObject> constantPool) {
+        for (int i = 0; i < constantPool.size(); i++) {
             if (FunctionList.containsKey(constantPool.get(i).toString(this)))
                 globals.put(constantPool.get(i).toString(this), FunctionList.get(constantPool.get(i).toString(this)));
             else if (module.Attributes.containsKey(constantPool.get(i).toString(this)))
@@ -431,21 +402,17 @@ public class VirtualMachine {
                 globals.put(type.getKey(), type.getValue());
         }
         List<Integer> keys = new ArrayList<>(module.Globals.keySet());
-        for (int key : keys){
+        for (int key : keys) {
             module.Globals.put(key, module.Globals.get(key).invoke(this, new HassiumObject[0]));
         }
     }
 
-    private void preformExtensions()
-    {
-        for (String key : module.Attributes.keySet())
-        {
-            if (key.startsWith("__extend__"))
-            {
+    private void preformExtensions() {
+        for (String key : module.Attributes.keySet()) {
+            if (key.startsWith("__extend__")) {
                 HassiumExtend extend = Helpers.as(module.Attributes.get(key), HassiumExtend.class);
                 HassiumObject target = extend.getTarget().invoke(this, new HassiumObject[0]);
-                for (Map.Entry<String, HassiumObject> attrib : extend.getAdditions().Attributes.entrySet())
-                {
+                for (Map.Entry<String, HassiumObject> attrib : extend.getAdditions().Attributes.entrySet()) {
                     if (target.Attributes.containsKey(attrib.getKey()))
                         target.Attributes.remove(attrib.getKey());
                     target.Attributes.put(attrib.getKey(), attrib.getValue());
@@ -457,10 +424,9 @@ public class VirtualMachine {
         }
     }
 
-    private void addArgs(List<String> args)
-    {
+    private void addArgs(List<String> args) {
         HassiumList list = new HassiumList(new HassiumObject[0]);
-        for (String arg : args){
+        for (String arg : args) {
             list.getValue().add(new HassiumString(arg));
         }
         globals.put("args", list);

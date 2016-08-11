@@ -22,7 +22,8 @@ public class Parameter {
     }
 
     public Parameter(String name) {
-        this(name, null);
+        isEnforced = true;
+        this.name = name;
     }
 
     public Parameter(String name, String type) {

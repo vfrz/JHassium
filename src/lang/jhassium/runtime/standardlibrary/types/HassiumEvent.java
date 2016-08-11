@@ -20,20 +20,20 @@ public class HassiumEvent extends HassiumObject {
 
     public HassiumEvent() {
         try {
-            Attributes.put(HassiumObject.INVOKE_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("_new"), this, new int[]{0, 1}));
+            Attributes.put(HassiumObject.INVOKE_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("_new", VirtualMachine.class, HassiumObject[].class), this, new int[]{0, 1}));
         } catch (NoSuchMethodException e) {
             HassiumLogger.error("Internal error HassiumChar : " + e.getMessage());
         }
     }
 
-    private HassiumEvent _new(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumEvent _new(VirtualMachine vm, HassiumObject[] args) {
         HassiumEvent hassiumEvent = new HassiumEvent();
 
         hassiumEvent.Handlers = args.length == 0 ? new HassiumList(new HassiumObject[0]) : HassiumList.Create(args[0]);
         try {
-            hassiumEvent.Attributes.put("add", new HassiumFunction(this.getClass().getDeclaredMethod("add"), this, -1));
-            hassiumEvent.Attributes.put("handle", new HassiumFunction(this.getClass().getDeclaredMethod("handle"), this, -1));
-            hassiumEvent.Attributes.put("remove", new HassiumFunction(this.getClass().getDeclaredMethod("remove"), this, -1));
+            hassiumEvent.Attributes.put("add", new HassiumFunction(this.getClass().getDeclaredMethod("add", VirtualMachine.class, HassiumObject[].class), this, -1));
+            hassiumEvent.Attributes.put("handle", new HassiumFunction(this.getClass().getDeclaredMethod("handle", VirtualMachine.class, HassiumObject[].class), this, -1));
+            hassiumEvent.Attributes.put("remove", new HassiumFunction(this.getClass().getDeclaredMethod("remove", VirtualMachine.class, HassiumObject[].class), this, -1));
         } catch (NoSuchMethodException e) {
             HassiumLogger.error("Internal error HassiumChar : " + e.getMessage());
         }

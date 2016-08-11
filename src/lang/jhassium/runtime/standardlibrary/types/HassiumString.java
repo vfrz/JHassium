@@ -34,49 +34,49 @@ public class HassiumString extends HassiumObject {
     public HassiumString(String value) {
         this.value = value;
         try {
-            Attributes.put("contains", new HassiumFunction(this.getClass().getDeclaredMethod("contains"), this, 1));
-            Attributes.put("endsWith", new HassiumFunction(this.getClass().getDeclaredMethod("endsWith"), this, 1));
-            Attributes.put("getBytes", new HassiumFunction(this.getClass().getDeclaredMethod("getBytes"), this, 0));
-            Attributes.put("length", new HassiumProperty(this.getClass().getDeclaredMethod("get_Length"), this));
-            Attributes.put("replace", new HassiumFunction(this.getClass().getDeclaredMethod("replace"), this, 2));
-            Attributes.put("reverse", new HassiumFunction(this.getClass().getDeclaredMethod("reverse"), this, 0));
-            Attributes.put("split", new HassiumFunction(this.getClass().getDeclaredMethod("split"), this, 1));
-            Attributes.put("startsWith", new HassiumFunction(this.getClass().getDeclaredMethod("starsWith"), this, 1));
-            Attributes.put("stripChars", new HassiumFunction(this.getClass().getDeclaredMethod("stripChars"), this, 1));
-            Attributes.put("substring", new HassiumFunction(this.getClass().getDeclaredMethod("substring"), this, new int[]{1, 2}));
-            Attributes.put("toBool", new HassiumFunction(this.getClass().getDeclaredMethod("toBool"), this, 0));
-            Attributes.put("toChar", new HassiumFunction(this.getClass().getDeclaredMethod("toChar"), this, 0));
-            Attributes.put("toDouble", new HassiumFunction(this.getClass().getDeclaredMethod("toDouble"), this, 0));
-            Attributes.put("toInt", new HassiumFunction(this.getClass().getDeclaredMethod("toInt"), this, 0));
-            Attributes.put("toList", new HassiumFunction(this.getClass().getDeclaredMethod("toList"), this, 0));
-            Attributes.put("toLower", new HassiumFunction(this.getClass().getDeclaredMethod("toLower"), this, 0));
-            Attributes.put("toUpper", new HassiumFunction(this.getClass().getDeclaredMethod("toUpper"), this, 0));
-            Attributes.put("trim", new HassiumFunction(this.getClass().getDeclaredMethod("trim"), this, 0));
-            Attributes.put("trimLeft", new HassiumFunction(this.getClass().getDeclaredMethod("trimLeft"), this, 0));
-            Attributes.put("trimRight", new HassiumFunction(this.getClass().getDeclaredMethod("trimRight"), this, 0));
-            Attributes.put(HassiumObject.CONTAINS, new HassiumFunction(this.getClass().getDeclaredMethod("contains"), this, 1));
-            Attributes.put(HassiumObject.TOSTRING_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__tostring__"), this, 0));
-            Attributes.put(HassiumObject.ADD_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__add__"), this, 1));
-            Attributes.put(HassiumObject.MUL_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__mul__"), this, 1));
-            Attributes.put(HassiumObject.EQUALS_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__equals__"), this, 1));
-            Attributes.put(HassiumObject.NOT_EQUAL_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__notequal__"), this, 1));
-            Attributes.put(HassiumObject.INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__index__"), this, 1));
-            Attributes.put(HassiumObject.ITER_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__iter__"), this, 0));
+            Attributes.put("contains", new HassiumFunction(this.getClass().getDeclaredMethod("contains", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put("endsWith", new HassiumFunction(this.getClass().getDeclaredMethod("endsWith", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put("getBytes", new HassiumFunction(this.getClass().getDeclaredMethod("getBytes", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put("length", new HassiumProperty(this.getClass().getDeclaredMethod("get_Length", VirtualMachine.class, HassiumObject[].class), this));
+            Attributes.put("replace", new HassiumFunction(this.getClass().getDeclaredMethod("replace", VirtualMachine.class, HassiumObject[].class), this, 2));
+            Attributes.put("reverse", new HassiumFunction(this.getClass().getDeclaredMethod("reverse", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put("split", new HassiumFunction(this.getClass().getDeclaredMethod("split", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put("startsWith", new HassiumFunction(this.getClass().getDeclaredMethod("startsWith", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put("stripChars", new HassiumFunction(this.getClass().getDeclaredMethod("stripChars", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put("substring", new HassiumFunction(this.getClass().getDeclaredMethod("substring", VirtualMachine.class, HassiumObject[].class), this, new int[]{1, 2}));
+            Attributes.put("toBool", new HassiumFunction(this.getClass().getDeclaredMethod("toBool", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put("toChar", new HassiumFunction(this.getClass().getDeclaredMethod("toChar", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put("toDouble", new HassiumFunction(this.getClass().getDeclaredMethod("toDouble", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put("toInt", new HassiumFunction(this.getClass().getDeclaredMethod("toInt", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put("toList", new HassiumFunction(this.getClass().getDeclaredMethod("toList", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put("toLower", new HassiumFunction(this.getClass().getDeclaredMethod("toLower", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put("toUpper", new HassiumFunction(this.getClass().getDeclaredMethod("toUpper", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put("trim", new HassiumFunction(this.getClass().getDeclaredMethod("trim", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put("trimLeft", new HassiumFunction(this.getClass().getDeclaredMethod("trimLeft", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put("trimRight", new HassiumFunction(this.getClass().getDeclaredMethod("trimRight", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put(HassiumObject.CONTAINS, new HassiumFunction(this.getClass().getDeclaredMethod("contains", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.TOSTRING_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__tostring__", VirtualMachine.class, HassiumObject[].class), this, 0));
+            Attributes.put(HassiumObject.ADD_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__add__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.MUL_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__mul__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.EQUALS_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__equals__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.NOT_EQUAL_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__notequal__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__index__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.ITER_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__iter__", VirtualMachine.class, HassiumObject[].class), this, 0));
         } catch (NoSuchMethodException e) {
             HassiumLogger.error("Internal error HassiumString : " + e.getMessage());
         }
         addType(HassiumString.TypeDefinition);
     }
 
-    private HassiumBool contains(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumBool contains(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumBool(value.contains(HassiumString.create(args[0]).getValue()));
     }
 
-    private HassiumBool endsWith(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumBool endsWith(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumBool(value.endsWith(HassiumString.create(args[0]).getValue()));
     }
 
-    private HassiumList getBytes(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumList getBytes(VirtualMachine vm, HassiumObject[] args) {
         byte[] bytes = value.getBytes();
         HassiumChar[] elements = new HassiumChar[bytes.length];
         for (int i = 0; i < elements.length; i++)
@@ -84,22 +84,22 @@ public class HassiumString extends HassiumObject {
         return new HassiumList(elements);
     }
 
-    private HassiumInt get_Length(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumInt get_Length(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumInt(value.length());
     }
 
-    private HassiumString replace(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString replace(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumString(value.replace(HassiumString.create(args[0]).getValue(), HassiumString.create(args[1]).getValue()));
     }
 
-    private HassiumString reverse(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString reverse(VirtualMachine vm, HassiumObject[] args) {
         StringBuilder sb = new StringBuilder();
         for (int i = value.length() - 1; i >= 0; i--)
             sb.append(value.charAt(i));
         return new HassiumString(sb.toString());
     }
 
-    private HassiumList split(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumList split(VirtualMachine vm, HassiumObject[] args) {
         HassiumChar c = HassiumChar.create(args[0]);
         String[] strings = value.split(c.getValue().toString());
         HassiumObject[] elements = new HassiumObject[strings.length];
@@ -108,11 +108,11 @@ public class HassiumString extends HassiumObject {
         return new HassiumList(elements);
     }
 
-    private HassiumBool startsWith(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumBool startsWith(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumBool(value.startsWith(HassiumString.create(args[0]).getValue()));
     }
 
-    private HassiumString stripChars(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString stripChars(VirtualMachine vm, HassiumObject[] args) {
         StringBuilder sb = new StringBuilder();
         if (args[0] instanceof HassiumList) {
             HassiumList list = (HassiumList) args[0];
@@ -133,7 +133,7 @@ public class HassiumString extends HassiumObject {
         return new HassiumString(sb.toString());
     }
 
-    private HassiumString substring(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString substring(VirtualMachine vm, HassiumObject[] args) {
         switch (args.length) {
             case 1:
                 return new HassiumString(value.substring(HassiumDouble.create(args[0]).getValueInt()));
@@ -143,7 +143,7 @@ public class HassiumString extends HassiumObject {
         return null;
     }
 
-    private HassiumBool toBool(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumBool toBool(VirtualMachine vm, HassiumObject[] args) {
         switch (value.toLowerCase()) {
             case "false":
                 return new HassiumBool(false);
@@ -155,54 +155,54 @@ public class HassiumString extends HassiumObject {
         return null; // Not reachable but for compilation
     }
 
-    private HassiumChar toChar(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumChar toChar(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumChar(value.charAt(0));
     }
 
-    private HassiumDouble toDouble(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumDouble toDouble(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumDouble(Double.parseDouble(value));
     }
 
-    private HassiumInt toInt(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumInt toInt(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumInt(Long.parseLong(value));
     }
 
-    private HassiumList toList(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumList toList(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject[] items = new HassiumObject[value.length()];
         for (int i = 0; i < items.length; i++)
             items[i] = new HassiumChar(value.charAt(i));
         return new HassiumList(items);
     }
 
-    private HassiumString toLower(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString toLower(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumString(value.toLowerCase());
     }
 
-    private HassiumString toUpper(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString toUpper(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumString(value.toUpperCase());
     }
 
-    private HassiumString trim(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString trim(VirtualMachine vm, HassiumObject[] args) {
         return trimRight(vm, new HassiumObject[]{trimLeft(vm, args)});
     }
 
-    private HassiumString trimLeft(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString trimLeft(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumString(value.replaceAll("^\\s+", ""));
     }
 
-    private HassiumString trimRight(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString trimRight(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumString(value.replaceAll("\\s+$", ""));
     }
 
-    private HassiumString __tostring__(VirtualMachine vm, HassiumObject[] args) {
-        return this;
+    public HassiumString __tostring__(VirtualMachine vm, HassiumObject[] args) {
+        return new HassiumString(value);
     }
 
-    private HassiumObject __add__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __add__(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumString(value + new HassiumString(args[0].toString(vm)).getValue());
     }
 
-    private HassiumObject __mul__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __mul__(VirtualMachine vm, HassiumObject[] args) {
         StringBuilder sb = new StringBuilder();
         HassiumInt right = (HassiumInt) args[0];
         for (int i = 0; i < right.getValue(); i++)
@@ -210,23 +210,23 @@ public class HassiumString extends HassiumObject {
         return new HassiumString(sb.toString());
     }
 
-    private HassiumObject __equals__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __equals__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumString)
-            return new HassiumBool(value.equals((HassiumString) obj.getValue()));
+            return new HassiumBool(value.equals(obj.getValue()));
         HassiumLogger.error("Cannot compare string to " + obj);
         return null; //Not reachable but for compilation
     }
 
-    private HassiumObject __notequal__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __notequal__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumString)
-            return new HassiumBool(!value.equals((HassiumString) obj.getValue()));
+            return new HassiumBool(!value.equals(obj.getValue()));
         HassiumLogger.error("Cannot compare string to " + obj);
         return null; //Not reachable but for compilation
     }
 
-    private HassiumObject __index__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __index__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumDouble)
             return new HassiumChar(value.charAt(((HassiumDouble) obj).getValueInt()));
@@ -236,7 +236,7 @@ public class HassiumString extends HassiumObject {
         return null; //Not reachable but for compilation
     }
 
-    private HassiumObject __iter__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __iter__(VirtualMachine vm, HassiumObject[] args) {
         return toList(vm, args);
     }
 

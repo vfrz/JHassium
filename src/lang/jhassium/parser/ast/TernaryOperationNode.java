@@ -13,8 +13,7 @@ import lang.jhassium.parser.IVisitor;
  */
 public class TernaryOperationNode extends AstNode {
 
-    public TernaryOperationNode(AstNode predicate, AstNode trueBody, AstNode elseBody, SourceLocation location)
-    {
+    public TernaryOperationNode(AstNode predicate, AstNode trueBody, AstNode elseBody, SourceLocation location) {
         Children.add(predicate);
         Children.add(trueBody);
         Children.add(elseBody);

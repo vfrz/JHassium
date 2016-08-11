@@ -2,7 +2,6 @@ package lang.jhassium.codegen;
 
 import lang.jhassium.SourceLocation;
 import lang.jhassium.parser.Parameter;
-import lang.jhassium.runtime.HassiumTypeDefinition;
 import lang.jhassium.runtime.VirtualMachine;
 import lang.jhassium.runtime.standardlibrary.HassiumClass;
 import lang.jhassium.runtime.standardlibrary.HassiumObject;
@@ -23,31 +22,29 @@ public class MethodBuilder extends HassiumObject {
 
     public HassiumClass Parent;
 
-    private String Name;
-
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String value) {
-        Name = value;
+        name = value;
         addType(HassiumFunction.TypeDefinition);
     }
 
     private String name = "";
     public String ReturnType;
 
-    public HashMap<Parameter, Integer> Parameters = new HashMap<>();
+    public LinkedHashMap<Parameter, Integer> Parameters = new LinkedHashMap<>();
     public List<Instruction> Instructions = new ArrayList<>();
 
-    public HashMap<Double, Integer> Labels = new HashMap<>();
+    public LinkedHashMap<Double, Integer> Labels = new LinkedHashMap<>();
     public Stack<Double> BreakLabels = new Stack<>();
     public Stack<Double> ContinueLabels = new Stack<>();
 
     public String SourceRepresentation;
 
     public boolean isConstructor() {
-        return Name.equals("new");
+        return name.equals("new");
     }
 
     public MethodBuilder() {
@@ -58,13 +55,14 @@ public class MethodBuilder extends HassiumObject {
         if (name != "__lambda__" && name != "__catch__")
             vm.getStackFrame().enterFrame();
 
-        vm.getCallStack().push(SourceRepresentation != null ? SourceRepresentation : Name);
+        vm.getCallStack().push(SourceRepresentation != null ? SourceRepresentation : name);
         int counter = 0;
         for (Map.Entry<Parameter, Integer> param : Parameters.entrySet()) {
             HassiumObject argument = args[counter++];
             if (param.getKey().isEnforced()) {
-                if (!argument.Types.contains((HassiumTypeDefinition) vm.getGlobals().get(param.getKey().getType())))
+                if (!argument.Types.contains(vm.getGlobals().get(param.getKey().getType())) && argument.Types.contains("null")) { //HACK check for null ?
                     HassiumLogger.error(String.format("Expected type %1s to %2s, instead got %3s!", param.getKey().getType(), param.getKey().getName(), argument.type().toString(vm)));
+                }
             }
 
             vm.getStackFrame().add(param.getValue(), argument);
@@ -88,8 +86,8 @@ public class MethodBuilder extends HassiumObject {
         return returnValue;
     }
 
-    public static <TKey, TValue extends ICloneable> HashMap<TKey, TValue> cloneDictionary(HashMap<TKey, TValue> original) {
-        HashMap<TKey, TValue> ret = new HashMap<>(original.size());
+    public static <TKey, TValue extends ICloneable> LinkedHashMap<TKey, TValue> cloneDictionary(LinkedHashMap<TKey, TValue> original) {
+        LinkedHashMap<TKey, TValue> ret = new LinkedHashMap<>(original.size());
         for (Map.Entry<TKey, TValue> entry : original.entrySet()) {
             ret.put(entry.getKey(), (TValue) entry.getValue().clone());
         }

@@ -18,16 +18,13 @@ import lang.jhassium.utils.Helpers;
  */
 public class DictionaryNode extends AstNode {
 
-    public DictionaryNode(SourceLocation location)
-    {
+    public DictionaryNode(SourceLocation location) {
         Location = location;
     }
 
-    public static DictionaryNode parse(Parser parser)
-    {
+    public static DictionaryNode parse(Parser parser) {
         DictionaryNode dict = new DictionaryNode(parser.getLocation());
-        while (!parser.acceptToken(TokenType.RightBrace))
-        {
+        while (!parser.acceptToken(TokenType.RightBrace)) {
             BinaryOperationNode binop = Helpers.as(ExpressionNode.parse(parser), BinaryOperationNode.class);
             if (binop.getBinaryOperation() == BinaryOperation.Slice)
                 dict.Children.add(new KeyValuePairNode(binop.getLeft(), binop.getRight(), binop.Location));

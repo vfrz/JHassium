@@ -1,6 +1,5 @@
 package lang.jhassium.runtime.standardlibrary.types;
 
-import javafx.beans.binding.ObjectExpression;
 import lang.jhassium.runtime.HassiumTypeDefinition;
 import lang.jhassium.runtime.VirtualMachine;
 import lang.jhassium.runtime.standardlibrary.HassiumObject;

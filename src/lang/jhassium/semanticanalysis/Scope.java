@@ -1,6 +1,6 @@
 package lang.jhassium.semanticanalysis;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * File : Scope.java
@@ -11,7 +11,7 @@ import java.util.HashMap;
  */
 public class Scope {
 
-    private HashMap<String, Integer> symbols = new HashMap<>();
+    private LinkedHashMap<String, Integer> symbols = new LinkedHashMap<>();
 
     public int getSymbol(String name) {
         return symbols.get(name);

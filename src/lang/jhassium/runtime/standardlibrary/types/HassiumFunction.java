@@ -4,6 +4,7 @@ import lang.jhassium.runtime.HassiumTypeDefinition;
 import lang.jhassium.runtime.VirtualMachine;
 import lang.jhassium.runtime.standardlibrary.HassiumObject;
 import lang.jhassium.utils.HassiumLogger;
+import lang.jhassium.utils.Helpers;
 
 import java.lang.reflect.Method;
 
@@ -25,10 +26,7 @@ public class HassiumFunction extends HassiumObject {
     private int[] paramLengths;
 
     public HassiumFunction(Method target, Object object, int paramLength) {
-        this.target = target;
-        this.object = object;
-        this.paramLengths = new int[]{paramLength};
-        addType(HassiumFunction.TypeDefinition);
+        this(target, object, new int[]{paramLength});
     }
 
     public HassiumFunction(Method target, Object object, int[] paramLengths) {
@@ -51,7 +49,8 @@ public class HassiumFunction extends HassiumObject {
                     if (vm != null)
                         vm.getCallStack().pop();
                     try {
-                        return (HassiumObject) target.invoke(object, vm, args);
+                        return Helpers.as(target.invoke(object, vm, args), HassiumObject.class);
+                        //return (HassiumObject) target.invoke(object, vm, args);
                     } catch (Exception e) {
                         HassiumLogger.error("Error while invoking HassiumFunction with target name : " + target.getName());
                     }
@@ -70,7 +69,7 @@ public class HassiumFunction extends HassiumObject {
         return null; //Not reachable but for compilation
     }
 
-    private HassiumString __tostring__(HassiumObject[] args) {
+    public HassiumString __tostring__(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumString(target.getName());
     }
 

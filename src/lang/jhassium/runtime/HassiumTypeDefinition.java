@@ -27,7 +27,7 @@ public class HassiumTypeDefinition extends HassiumObject {
     public HassiumTypeDefinition(String type) {
         typeString = type;
         try {
-            Attributes.put(HassiumObject.TOSTRING_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("toString"), this, 0));
+            Attributes.put(HassiumObject.TOSTRING_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("toString", VirtualMachine.class, HassiumObject[].class), this, 0));
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -42,7 +42,8 @@ public class HassiumTypeDefinition extends HassiumObject {
         return this;
     }
 
-    private HassiumString toString(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString toString(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumString(typeString);
     }
+
 }

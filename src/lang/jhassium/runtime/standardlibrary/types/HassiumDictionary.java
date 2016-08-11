@@ -6,7 +6,7 @@ import lang.jhassium.runtime.standardlibrary.HassiumObject;
 import lang.jhassium.utils.HassiumLogger;
 import lang.jhassium.utils.Helpers;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -20,9 +20,9 @@ public class HassiumDictionary extends HassiumObject {
 
     public static HassiumTypeDefinition TypeDefinition = new HassiumTypeDefinition("dictionary");
 
-    private HashMap<HassiumObject, HassiumObject> value = new HashMap<>();
+    private LinkedHashMap<HassiumObject, HassiumObject> value = new LinkedHashMap<>();
 
-    public HashMap<HassiumObject, HassiumObject> getValue() {
+    public LinkedHashMap<HassiumObject, HassiumObject> getValue() {
         return value;
     }
 
@@ -31,19 +31,19 @@ public class HassiumDictionary extends HassiumObject {
             value.put(pair.Key, pair.getValue());
 
         try {
-            Attributes.put("containsKey", new HassiumFunction(this.getClass().getDeclaredMethod("containsKey"), this, 1));
-            Attributes.put("containsValue", new HassiumFunction(this.getClass().getDeclaredMethod("containsValue"), this, 1));
-            Attributes.put("length", new HassiumProperty(this.getClass().getDeclaredMethod("get_Length"), this));
-            Attributes.put(HassiumObject.ADD_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__add__"), this, 1));
-            Attributes.put(HassiumObject.INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__index__"), this, 1));
-            Attributes.put(HassiumObject.STORE_INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__storeindex__"), this, 2));
+            Attributes.put("containsKey", new HassiumFunction(this.getClass().getDeclaredMethod("containsKey", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put("containsValue", new HassiumFunction(this.getClass().getDeclaredMethod("containsValue", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put("length", new HassiumProperty(this.getClass().getDeclaredMethod("get_Length", VirtualMachine.class, HassiumObject[].class), this));
+            Attributes.put(HassiumObject.ADD_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__add__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__index__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.STORE_INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__storeindex__", VirtualMachine.class, HassiumObject[].class), this, 2));
         } catch (NoSuchMethodException e) {
             HassiumLogger.error("Internal error HassiumBool : " + e.getMessage());
         }
         addType(HassiumDictionary.TypeDefinition);
     }
 
-    private HassiumBool containsKey(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumBool containsKey(VirtualMachine vm, HassiumObject[] args) {
         for (Map.Entry<HassiumObject, HassiumObject> pair : value.entrySet()) {
             if ((pair.getKey()).equals(vm, args[0]).getValue())
                 return new HassiumBool(true);
@@ -51,7 +51,7 @@ public class HassiumDictionary extends HassiumObject {
         return new HassiumBool(false);
     }
 
-    private HassiumBool containsValue(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumBool containsValue(VirtualMachine vm, HassiumObject[] args) {
         for (Map.Entry<HassiumObject, HassiumObject> pair : value.entrySet()) {
             if ((pair.getValue()).equals(vm, args[0]).getValue())
                 return new HassiumBool(true);
@@ -59,11 +59,11 @@ public class HassiumDictionary extends HassiumObject {
         return new HassiumBool(false);
     }
 
-    private HassiumInt get_Length(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumInt get_Length(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumInt(value.size());
     }
 
-    private HassiumDictionary __add__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumDictionary __add__(VirtualMachine vm, HassiumObject[] args) {
         HassiumDictionary dict = Helpers.as(this.clone(), HassiumDictionary.class);
         HassiumKeyValuePair pair = HassiumKeyValuePair.create(args[0]);
         dict.getValue().put(pair.Key, pair.getValue());
@@ -71,7 +71,7 @@ public class HassiumDictionary extends HassiumObject {
         return dict;
     }
 
-    private HassiumList __iter__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumList __iter__(VirtualMachine vm, HassiumObject[] args) {
         HassiumList list = new HassiumList(new HassiumObject[0]);
 
         for (Map.Entry<HassiumObject, HassiumObject> pair : value.entrySet())
@@ -79,7 +79,7 @@ public class HassiumDictionary extends HassiumObject {
         return list;
     }
 
-    private HassiumObject __index__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __index__(VirtualMachine vm, HassiumObject[] args) {
         for (Map.Entry<HassiumObject, HassiumObject> pair : value.entrySet()) {
             if (pair.getKey().equals(vm, args[0]).getValue())
                 return (HassiumObject) pair.getValue();
@@ -88,7 +88,7 @@ public class HassiumDictionary extends HassiumObject {
         return null; //Not reachable but for compilation
     }
 
-    private HassiumObject __storeindex__(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumObject __storeindex__(VirtualMachine vm, HassiumObject[] args) {
         for (HassiumObject key : value.keySet()) {
             if (key.equals(vm, args[0]).getValue()) {
                 value.put(key, args[1]);

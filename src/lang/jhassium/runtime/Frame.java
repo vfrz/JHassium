@@ -2,7 +2,7 @@ package lang.jhassium.runtime;
 
 import lang.jhassium.runtime.standardlibrary.HassiumObject;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * File : Frame.java
@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 public class Frame {
 
-    public HashMap<Integer, HassiumObject> variables = new HashMap<>();
+    public LinkedHashMap<Integer, HassiumObject> variables = new LinkedHashMap<>();
 
     public void add(int index, HassiumObject value) {
         variables.put(index, value);

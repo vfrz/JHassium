@@ -15,8 +15,7 @@ public class Int64Node extends AstNode {
 
     private long number;
 
-    public Int64Node(long number, SourceLocation location)
-    {
+    public Int64Node(long number, SourceLocation location) {
         this.number = number;
         Location = location;
     }
