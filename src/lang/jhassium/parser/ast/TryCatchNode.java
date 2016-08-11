@@ -21,20 +21,20 @@ public class TryCatchNode extends AstNode {
         Location = location;
     }
 
-    public AstNode getTryBody() {
-        return Children.get(0);
-    }
-
-    public AstNode getCatchBody() {
-        return Children.get(1);
-    }
-
     public static TryCatchNode parse(Parser parser) {
         parser.expectToken(TokenType.Identifier, "try");
         AstNode tryBody = StatementNode.parse(parser);
         parser.expectToken(TokenType.Identifier, "catch");
         AstNode catchBody = StatementNode.parse(parser);
         return new TryCatchNode(tryBody, catchBody, parser.getLocation());
+    }
+
+    public AstNode getTryBody() {
+        return Children.get(0);
+    }
+
+    public AstNode getCatchBody() {
+        return Children.get(1);
     }
 
     public void visit(IVisitor visitor) {

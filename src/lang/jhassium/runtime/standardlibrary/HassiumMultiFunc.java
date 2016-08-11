@@ -23,10 +23,6 @@ public class HassiumMultiFunc extends HassiumObject {
 
     private List<MethodBuilder> lambdas;
 
-    public List<MethodBuilder> getLambdas() {
-        return lambdas;
-    }
-
     public HassiumMultiFunc(List<MethodBuilder> methods) {
         this.lambdas = methods;
         try {
@@ -36,6 +32,10 @@ public class HassiumMultiFunc extends HassiumObject {
         } catch (NoSuchMethodException e) {
             HassiumLogger.error("Internal error HassiumBool : " + e.getMessage());
         }
+    }
+
+    public List<MethodBuilder> getLambdas() {
+        return lambdas;
     }
 
     public HassiumNull add(VirtualMachine vm, HassiumObject[] args) {

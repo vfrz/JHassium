@@ -26,10 +26,6 @@ public class CaseNode extends AstNode {
         Location = location;
     }
 
-    public AstNode getBody() {
-        return body;
-    }
-
     public static CaseNode parse(Parser parser) {
         parser.expectToken(TokenType.Identifier, "case");
         List<AstNode> predicates = new ArrayList<>();
@@ -40,6 +36,10 @@ public class CaseNode extends AstNode {
         AstNode body = StatementNode.parse(parser);
 
         return new CaseNode(predicates, body, parser.getLocation());
+    }
+
+    public AstNode getBody() {
+        return body;
     }
 
     public void visit(IVisitor visitor) {

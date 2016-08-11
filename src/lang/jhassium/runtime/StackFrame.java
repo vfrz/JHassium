@@ -17,12 +17,12 @@ public class StackFrame {
 
     public Stack<Frame> Frames;
 
-    public LinkedHashMap<Integer, HassiumObject> getLocals() {
-        return Frames.peek().variables;
-    }
-
     public StackFrame() {
         Frames = new Stack<Frame>();
+    }
+
+    public LinkedHashMap<Integer, HassiumObject> getLocals() {
+        return Frames.peek().variables;
     }
 
     public void enterFrame() {

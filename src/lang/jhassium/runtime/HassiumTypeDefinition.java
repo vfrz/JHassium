@@ -15,13 +15,6 @@ import lang.jhassium.utils.HassiumLogger;
 public class HassiumTypeDefinition extends HassiumObject {
 
     public static HassiumTypeDefinition TypeDefinition = new HassiumTypeDefinition("TypeDefinition");
-
-    public static HassiumTypeDefinition create(HassiumObject obj) {
-        if (!(obj instanceof HassiumTypeDefinition))
-            HassiumLogger.error(String.format("Cannot convert from %1s to TypeDefinition!", obj.type()));
-        return (HassiumTypeDefinition) obj;
-    }
-
     private String typeString;
 
     public HassiumTypeDefinition(String type) {
@@ -32,6 +25,12 @@ public class HassiumTypeDefinition extends HassiumObject {
             e.printStackTrace();
         }
         addType(HassiumTypeDefinition.TypeDefinition);
+    }
+
+    public static HassiumTypeDefinition create(HassiumObject obj) {
+        if (!(obj instanceof HassiumTypeDefinition))
+            HassiumLogger.error(String.format("Cannot convert from %1s to TypeDefinition!", obj.type()));
+        return (HassiumTypeDefinition) obj;
     }
 
     public String getTypeString() {

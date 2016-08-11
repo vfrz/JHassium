@@ -18,18 +18,7 @@ import java.util.List;
 public class HassiumString extends HassiumObject {
 
     public static HassiumTypeDefinition TypeDefinition = new HassiumTypeDefinition("string");
-
-    public static HassiumString create(HassiumObject obj) {
-        if (!(obj instanceof HassiumString))
-            HassiumLogger.error(String.format("Cannot convert from %1s to string!", obj.type()));
-        return (HassiumString) obj;
-    }
-
     private String value;
-
-    public String getValue() {
-        return value;
-    }
 
     public HassiumString(String value) {
         this.value = value;
@@ -66,6 +55,16 @@ public class HassiumString extends HassiumObject {
             HassiumLogger.error("Internal error HassiumString : " + e.getMessage());
         }
         addType(HassiumString.TypeDefinition);
+    }
+
+    public static HassiumString create(HassiumObject obj) {
+        if (!(obj instanceof HassiumString))
+            HassiumLogger.error(String.format("Cannot convert from %1s to string!", obj.type()));
+        return (HassiumString) obj;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public HassiumBool contains(VirtualMachine vm, HassiumObject[] args) {

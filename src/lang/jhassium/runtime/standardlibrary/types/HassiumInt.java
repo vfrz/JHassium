@@ -18,12 +18,6 @@ public class HassiumInt extends HassiumObject {
 
     private long value;
 
-    public static HassiumInt create(HassiumObject obj) {
-        if (!(obj instanceof HassiumInt))
-            HassiumLogger.error(String.format("Cannot convert from %1s to int!", obj.type().toString(null)));
-        return (HassiumInt) obj;
-    }
-
     public HassiumInt(long value) {
         this.value = value;
         try {
@@ -54,6 +48,12 @@ public class HassiumInt extends HassiumObject {
             HassiumLogger.error("Internal error HassiumInt : " + e.getMessage());
         }
         addType(HassiumInt.TypeDefinition);
+    }
+
+    public static HassiumInt create(HassiumObject obj) {
+        if (!(obj instanceof HassiumInt))
+            HassiumLogger.error(String.format("Cannot convert from %1s to int!", obj.type().toString(null)));
+        return (HassiumInt) obj;
     }
 
     public Long getValue() {

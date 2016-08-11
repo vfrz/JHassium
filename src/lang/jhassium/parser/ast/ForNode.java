@@ -23,6 +23,19 @@ public class ForNode extends AstNode {
         Location = location;
     }
 
+    public static ForNode parse(Parser parser) {
+        parser.expectToken(TokenType.Identifier, "for");
+        parser.expectToken(TokenType.LeftParentheses);
+        AstNode singleStatement = ExpressionStatementNode.parse(parser);
+        parser.acceptToken(TokenType.Semicolon);
+        AstNode predicate = ExpressionNode.parse(parser);
+        parser.acceptToken(TokenType.Semicolon);
+        AstNode repeatStatement = ExpressionStatementNode.parse(parser);
+        parser.expectToken(TokenType.RightParentheses);
+        AstNode body = StatementNode.parse(parser);
+        return new ForNode(singleStatement, predicate, repeatStatement, body, parser.getLocation());
+    }
+
     public AstNode getSingleStatement() {
         return Children.get(0);
     }
@@ -37,19 +50,6 @@ public class ForNode extends AstNode {
 
     public AstNode getBody() {
         return Children.get(3);
-    }
-
-    public static ForNode parse(Parser parser) {
-        parser.expectToken(TokenType.Identifier, "for");
-        parser.expectToken(TokenType.LeftParentheses);
-        AstNode singleStatement = ExpressionStatementNode.parse(parser);
-        parser.acceptToken(TokenType.Semicolon);
-        AstNode predicate = ExpressionNode.parse(parser);
-        parser.acceptToken(TokenType.Semicolon);
-        AstNode repeatStatement = ExpressionStatementNode.parse(parser);
-        parser.expectToken(TokenType.RightParentheses);
-        AstNode body = StatementNode.parse(parser);
-        return new ForNode(singleStatement, predicate, repeatStatement, body, parser.getLocation());
     }
 
     public void visit(IVisitor visitor) {

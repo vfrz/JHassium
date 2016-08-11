@@ -21,14 +21,6 @@ public class HassiumClosure extends HassiumObject {
     private MethodBuilder method;
     private Frame frame;
 
-    public MethodBuilder getMethod() {
-        return method;
-    }
-
-    public Frame getFrame() {
-        return frame;
-    }
-
     public HassiumClosure(MethodBuilder method, Frame frame) {
         this.method = method;
         this.frame = frame;
@@ -38,6 +30,14 @@ public class HassiumClosure extends HassiumObject {
             HassiumLogger.error("Internal error HassiumClosure : " + e.getMessage());
         }
         addType(HassiumClosure.TypeDefinition);
+    }
+
+    public MethodBuilder getMethod() {
+        return method;
+    }
+
+    public Frame getFrame() {
+        return frame;
     }
 
     public HassiumObject __invoke__(VirtualMachine vm, HassiumObject[] args) {

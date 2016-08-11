@@ -11,16 +11,15 @@ import lang.jhassium.runtime.standardlibrary.HassiumObject;
  */
 public class UserDefinedProperty extends HassiumObject {
 
-    private String name;
-
     public MethodBuilder GetMethod;
     public MethodBuilder SetMethod;
-
-    public String getName() {
-        return name;
-    }
+    private String name;
 
     public UserDefinedProperty(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }

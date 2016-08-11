@@ -29,18 +29,6 @@ public class PropertyNode extends AstNode {
         Location = location;
     }
 
-    public AstNode getGetBody() {
-        return Children.get(0);
-    }
-
-    public AstNode getSetBody() {
-        return Children.get(1);
-    }
-
-    public String getIdentifier() {
-        return identifier;
-    }
-
     public static PropertyNode parse(Parser parser) {
         String identifier = parser.expectToken(TokenType.Identifier).getValue();
         parser.expectToken(TokenType.LeftBrace);
@@ -57,6 +45,18 @@ public class PropertyNode extends AstNode {
         parser.expectToken(TokenType.RightBrace);
         parser.expectToken(TokenType.RightBrace);
         return new PropertyNode(identifier, getBody, parser.getLocation(), setBody);
+    }
+
+    public AstNode getGetBody() {
+        return Children.get(0);
+    }
+
+    public AstNode getSetBody() {
+        return Children.get(1);
+    }
+
+    public String getIdentifier() {
+        return identifier;
     }
 
     public void visit(IVisitor visitor) {

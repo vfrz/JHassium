@@ -19,14 +19,14 @@ public class UseNode extends AstNode {
         Children.add(target);
     }
 
-    public AstNode getTarget() {
-        return Children.get(0);
-    }
-
     public static UseNode parse(Parser parser) {
         parser.expectToken(TokenType.Identifier, "use");
         AstNode target = ExpressionNode.parse(parser);
         return new UseNode(target, parser.getLocation());
+    }
+
+    public AstNode getTarget() {
+        return Children.get(0);
     }
 
     public void visit(IVisitor visitor) {

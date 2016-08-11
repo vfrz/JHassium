@@ -15,10 +15,10 @@ import java.util.List;
  */
 public class HassiumModule extends HassiumObject {
 
-    private String name;
     public List<HassiumObject> ConstantPool;
     public LinkedHashMap<Integer, HassiumObject> Globals;
     public List<String> Imports;
+    private String name;
 
     public HassiumModule(String name) {
         this.name = name;

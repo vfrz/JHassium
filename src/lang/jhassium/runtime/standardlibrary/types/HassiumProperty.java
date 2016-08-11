@@ -23,6 +23,17 @@ public class HassiumProperty extends HassiumObject {
 
     private Object object;
 
+    public HassiumProperty(Method getValue, Object object) {
+        this(getValue, null, object);
+    }
+
+    public HassiumProperty(Method getValue, Method setValue, Object object) {
+        this.getValue = getValue;
+        this.setValue = setValue;
+        this.object = object;
+        addType(TypeDefinition);
+    }
+
     public Method getGetValue() {
         return getValue;
     }
@@ -33,17 +44,6 @@ public class HassiumProperty extends HassiumObject {
 
     public Object getObject() {
         return object;
-    }
-
-    public HassiumProperty(Method getValue, Object object) {
-        this(getValue, null, object);
-    }
-
-    public HassiumProperty(Method getValue, Method setValue, Object object) {
-        this.getValue = getValue;
-        this.setValue = setValue;
-        this.object = object;
-        addType(TypeDefinition);
     }
 
     public HassiumObject invoke(VirtualMachine vm, HassiumObject[] args) {

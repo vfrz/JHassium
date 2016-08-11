@@ -21,7 +21,6 @@ import java.util.List;
  */
 public class HassiumObject implements ICloneable {
 
-    public static HassiumNull Null = new HassiumNull();
     public static final String ADD_FUNCTION = "__add__";
     public static final String SUB_FUNCTION = "__sub__";
     public static final String MUL_FUNCTION = "__mul__";
@@ -52,10 +51,9 @@ public class HassiumObject implements ICloneable {
     public static final String BIT_SHIFT_RIGHT = "__bshiftright__";
     public static final String CONTAINS = "__contains__";
     public static final String TOSTRING_FUNCTION = "toString";
-
-    public LinkedHashMap<String, HassiumObject> Attributes = new LinkedHashMap<>();
-
+    public static HassiumNull Null = new HassiumNull();
     public static HassiumTypeDefinition DefaultTypeDefinition = new HassiumTypeDefinition("object");
+    public LinkedHashMap<String, HassiumObject> Attributes = new LinkedHashMap<>();
     public List<HassiumTypeDefinition> Types = new ArrayList<HassiumTypeDefinition>() {{
         add(DefaultTypeDefinition);
     }};

@@ -19,18 +19,8 @@ import java.util.List;
 public class HassiumList extends HassiumObject {
 
     public static HassiumTypeDefinition TypeDefinition = new HassiumTypeDefinition("list");
-
+    public int EnumerableIndex = 0;
     private List<HassiumObject> value;
-
-    public List<HassiumObject> getValue() {
-        return value;
-    }
-
-    public static HassiumList Create(HassiumObject obj) {
-        if (!(obj instanceof HassiumList))
-            HassiumLogger.error(String.format("Cannot convert from %1s to list!", obj.type()));
-        return (HassiumList) obj;
-    }
 
     public HassiumList(HassiumObject[] initial) {
         this.value = new ArrayList<>();
@@ -66,6 +56,16 @@ public class HassiumList extends HassiumObject {
             HassiumLogger.error("Internal error HassiumList : " + e.getMessage());
         }
         addType(HassiumList.TypeDefinition);
+    }
+
+    public static HassiumList Create(HassiumObject obj) {
+        if (!(obj instanceof HassiumList))
+            HassiumLogger.error(String.format("Cannot convert from %1s to list!", obj.type()));
+        return (HassiumList) obj;
+    }
+
+    public List<HassiumObject> getValue() {
+        return value;
     }
 
     public HassiumObject _add(VirtualMachine vm, HassiumObject[] args) {
@@ -195,8 +195,6 @@ public class HassiumList extends HassiumObject {
         copy.value.add(args[0]);
         return copy;
     }
-
-    public int EnumerableIndex = 0;
 
     public HassiumObject __iter__(VirtualMachine vm, HassiumObject[] args) {
         return this;

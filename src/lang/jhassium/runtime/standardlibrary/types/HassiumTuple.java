@@ -18,10 +18,6 @@ public class HassiumTuple extends HassiumObject {
 
     private HassiumObject[] value;
 
-    public HassiumObject[] getValue() {
-        return value;
-    }
-
     public HassiumTuple(HassiumObject[] elements) {
         value = elements;
 
@@ -38,6 +34,10 @@ public class HassiumTuple extends HassiumObject {
         }
 
         addType(HassiumTuple.TypeDefinition);
+    }
+
+    public HassiumObject[] getValue() {
+        return value;
     }
 
     public HassiumInt get_Length(VirtualMachine vm, HassiumObject[] args) {

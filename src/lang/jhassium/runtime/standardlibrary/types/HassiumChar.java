@@ -18,16 +18,6 @@ public class HassiumChar extends HassiumObject {
 
     private char value;
 
-    public Character getValue() {
-        return value;
-    }
-
-    public static HassiumChar create(HassiumObject obj) {
-        if (!(obj instanceof HassiumChar))
-            HassiumLogger.error(String.format("Cannot convert from %1s to char!", obj.type()));
-        return (HassiumChar) obj;
-    }
-
     public HassiumChar(char value) {
         this.value = value;
         try {
@@ -56,6 +46,16 @@ public class HassiumChar extends HassiumObject {
             HassiumLogger.error("Internal error HassiumChar : " + e.getMessage());
         }
         addType(HassiumChar.TypeDefinition);
+    }
+
+    public static HassiumChar create(HassiumObject obj) {
+        if (!(obj instanceof HassiumChar))
+            HassiumLogger.error(String.format("Cannot convert from %1s to char!", obj.type()));
+        return (HassiumChar) obj;
+    }
+
+    public Character getValue() {
+        return value;
     }
 
     public HassiumBool isDigit(VirtualMachine vm, HassiumObject[] args) {

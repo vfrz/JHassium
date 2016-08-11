@@ -22,14 +22,6 @@ public class WhileNode extends AstNode {
         Location = location;
     }
 
-    public AstNode getPredicate() {
-        return Children.get(0);
-    }
-
-    public AstNode getBody() {
-        return Children.get(1);
-    }
-
     public static WhileNode parse(Parser parser) {
         return parse(parser, false);
     }
@@ -41,6 +33,14 @@ public class WhileNode extends AstNode {
         parser.expectToken(TokenType.RightParentheses);
         AstNode body = StatementNode.parse(parser);
         return new WhileNode(predicate, body, parser.getLocation());
+    }
+
+    public AstNode getPredicate() {
+        return Children.get(0);
+    }
+
+    public AstNode getBody() {
+        return Children.get(1);
     }
 
     public void visit(IVisitor visitor) {

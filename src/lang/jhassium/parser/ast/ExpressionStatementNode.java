@@ -18,10 +18,6 @@ public class ExpressionStatementNode extends AstNode {
         Location = location;
     }
 
-    public AstNode getBody() {
-        return Children.get(0);
-    }
-
     public static AstNode parse(Parser parser) {
         AstNode expression = ExpressionNode.parse(parser);
         parser.acceptToken(TokenType.Semicolon);
@@ -35,6 +31,10 @@ public class ExpressionStatementNode extends AstNode {
                 return new ExpressionStatementNode(expression, parser.getLocation());
         }
         return expression;
+    }
+
+    public AstNode getBody() {
+        return Children.get(0);
     }
 
     public void visit(IVisitor visitor) {

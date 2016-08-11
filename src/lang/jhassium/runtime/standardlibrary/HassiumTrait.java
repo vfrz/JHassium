@@ -20,12 +20,12 @@ public class HassiumTrait extends HassiumObject {
 
     private List<Trait> traits;
 
-    public List<Trait> getTraits() {
-        return traits;
-    }
-
     public HassiumTrait(List<Trait> traits) {
         this.traits = traits;
+    }
+
+    public List<Trait> getTraits() {
+        return traits;
     }
 
     public boolean MatchesTrait(VirtualMachine vm, HassiumObject obj) {

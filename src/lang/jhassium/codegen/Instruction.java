@@ -15,6 +15,12 @@ public class Instruction {
     private double argument;
     private SourceLocation sourceLocation;
 
+    public Instruction(InstructionType instructionType, double argument, SourceLocation location) {
+        this.instructionType = instructionType;
+        this.argument = argument;
+        this.sourceLocation = location;
+    }
+
     public InstructionType getInstructionType() {
         return instructionType;
     }
@@ -25,11 +31,5 @@ public class Instruction {
 
     public SourceLocation getSourceLocation() {
         return sourceLocation;
-    }
-
-    public Instruction(InstructionType instructionType, double argument, SourceLocation location) {
-        this.instructionType = instructionType;
-        this.argument = argument;
-        this.sourceLocation = location;
     }
 }

@@ -22,10 +22,6 @@ public class HassiumDictionary extends HassiumObject {
 
     private LinkedHashMap<HassiumObject, HassiumObject> value = new LinkedHashMap<>();
 
-    public LinkedHashMap<HassiumObject, HassiumObject> getValue() {
-        return value;
-    }
-
     public HassiumDictionary(HassiumKeyValuePair[] pairs) {
         for (HassiumKeyValuePair pair : pairs)
             value.put(pair.Key, pair.getValue());
@@ -41,6 +37,10 @@ public class HassiumDictionary extends HassiumObject {
             HassiumLogger.error("Internal error HassiumBool : " + e.getMessage());
         }
         addType(HassiumDictionary.TypeDefinition);
+    }
+
+    public LinkedHashMap<HassiumObject, HassiumObject> getValue() {
+        return value;
     }
 
     public HassiumBool containsKey(VirtualMachine vm, HassiumObject[] args) {

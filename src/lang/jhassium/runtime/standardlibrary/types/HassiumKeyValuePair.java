@@ -15,20 +15,8 @@ import lang.jhassium.utils.HassiumLogger;
 public class HassiumKeyValuePair extends HassiumObject {
 
     public static HassiumTypeDefinition TypeDefinition = new HassiumTypeDefinition("KeyValuePair");
-
-    public static HassiumKeyValuePair create(HassiumObject obj) {
-        if (!(obj instanceof HassiumKeyValuePair))
-            HassiumLogger.error(String.format("Cannot convert from %1s to KeyValuePair", obj.type()));
-        return (HassiumKeyValuePair) obj;
-    }
-
     public HassiumObject Key;
-
     private HassiumObject value;
-
-    public HassiumObject getValue() {
-        return value;
-    }
 
     public HassiumKeyValuePair(HassiumObject key, HassiumObject value) {
         Key = key;
@@ -41,6 +29,16 @@ public class HassiumKeyValuePair extends HassiumObject {
             HassiumLogger.error("Internal error HassiumKeyValuePair : " + e.getMessage());
         }
         addType(HassiumKeyValuePair.TypeDefinition);
+    }
+
+    public static HassiumKeyValuePair create(HassiumObject obj) {
+        if (!(obj instanceof HassiumKeyValuePair))
+            HassiumLogger.error(String.format("Cannot convert from %1s to KeyValuePair", obj.type()));
+        return (HassiumKeyValuePair) obj;
+    }
+
+    public HassiumObject getValue() {
+        return value;
     }
 
     public HassiumObject get_Key(VirtualMachine vm, HassiumObject[] args) {

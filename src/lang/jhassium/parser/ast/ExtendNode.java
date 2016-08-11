@@ -25,19 +25,19 @@ public class ExtendNode extends AstNode {
         Location = location;
     }
 
+    public static ExtendNode parse(Parser parser) {
+        parser.expectToken(TokenType.Identifier, "extend");
+        AstNode target = ExpressionNode.parse(parser);
+        ClassNode clazz = new ClassNode("", StatementNode.parse(parser), new ArrayList<>(), parser.getLocation());
+        return new ExtendNode(target, clazz, parser.getLocation());
+    }
+
     public AstNode getTarget() {
         return target;
     }
 
     public ClassNode getClazz() {
         return (ClassNode) Children.get(0);
-    }
-
-    public static ExtendNode parse(Parser parser) {
-        parser.expectToken(TokenType.Identifier, "extend");
-        AstNode target = ExpressionNode.parse(parser);
-        ClassNode clazz = new ClassNode("", StatementNode.parse(parser), new ArrayList<>(), parser.getLocation());
-        return new ExtendNode(target, clazz, parser.getLocation());
     }
 
     public void visit(IVisitor visitor) {

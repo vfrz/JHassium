@@ -33,22 +33,6 @@ public class FuncNode extends AstNode {
         Location = location;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getReturnType() {
-        return returnType;
-    }
-
-    public List<Parameter> getParameters() {
-        return parameters;
-    }
-
-    public String getSourceRepresentation() {
-        return sourceRepresentation;
-    }
-
     public static FuncNode parse(Parser parser) {
         parser.expectToken(TokenType.Identifier, "func");
         String name = parser.expectToken(TokenType.Identifier).getValue();
@@ -77,6 +61,22 @@ public class FuncNode extends AstNode {
             sourceRepresentation.append(" : " + returnType);
 
         return new FuncNode(name, parameters, body, sourceRepresentation.toString(), returnType, parser.getLocation());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getReturnType() {
+        return returnType;
+    }
+
+    public List<Parameter> getParameters() {
+        return parameters;
+    }
+
+    public String getSourceRepresentation() {
+        return sourceRepresentation;
     }
 
     public void visit(IVisitor visitor) {

@@ -15,18 +15,7 @@ import lang.jhassium.utils.HassiumLogger;
 public class HassiumBool extends HassiumObject {
 
     public static HassiumTypeDefinition TypeDefinition = new HassiumTypeDefinition("bool");
-
-    public static HassiumBool create(HassiumObject obj) {
-        if (!(obj instanceof HassiumBool))
-            HassiumLogger.error(String.format("Cannot convert from %1s to bool!", obj.type()));
-        return (HassiumBool) obj;
-    }
-
     private boolean value;
-
-    public Boolean getValue() {
-        return value;
-    }
 
     public HassiumBool(boolean value) {
         this.value = value;
@@ -43,6 +32,16 @@ public class HassiumBool extends HassiumObject {
             HassiumLogger.error("Internal error HassiumBool : " + e.getMessage());
         }
         addType(HassiumBool.TypeDefinition);
+    }
+
+    public static HassiumBool create(HassiumObject obj) {
+        if (!(obj instanceof HassiumBool))
+            HassiumLogger.error(String.format("Cannot convert from %1s to bool!", obj.type()));
+        return (HassiumBool) obj;
+    }
+
+    public Boolean getValue() {
+        return value;
     }
 
     public HassiumBool toBool(VirtualMachine vm, HassiumObject[] args) {

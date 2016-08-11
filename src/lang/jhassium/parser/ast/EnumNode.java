@@ -27,10 +27,6 @@ public class EnumNode extends AstNode {
         Location = location;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public static EnumNode parse(Parser parser) {
         parser.expectToken(TokenType.Identifier, "enum");
         String name = parser.expectToken(TokenType.Identifier).getValue();
@@ -44,6 +40,10 @@ public class EnumNode extends AstNode {
         parser.expectToken(TokenType.RightBrace);
 
         return new EnumNode(name, members, parser.getLocation());
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void visit(IVisitor visitor) {

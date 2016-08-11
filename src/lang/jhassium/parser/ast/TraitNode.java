@@ -28,14 +28,6 @@ public class TraitNode extends AstNode {
         Location = location;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public List<Trait> getTraits() {
-        return traits;
-    }
-
     public static TraitNode parse(Parser parser) {
         parser.expectToken(TokenType.Identifier, "trait");
         String name = parser.expectToken(TokenType.Identifier).getValue();
@@ -49,6 +41,14 @@ public class TraitNode extends AstNode {
             parser.acceptToken(TokenType.Semicolon);
         }
         return new TraitNode(traits, name, parser.getLocation());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Trait> getTraits() {
+        return traits;
     }
 
     public void visit(IVisitor visitor) {

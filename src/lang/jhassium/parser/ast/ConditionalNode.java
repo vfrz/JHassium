@@ -27,18 +27,6 @@ public class ConditionalNode extends AstNode {
         Location = location;
     }
 
-    public AstNode getPredicate() {
-        return Children.get(0);
-    }
-
-    public AstNode getBody() {
-        return Children.get(1);
-    }
-
-    public AstNode getElseBody() {
-        return Children.get(2);
-    }
-
     public static ConditionalNode parse(Parser parser) {
         parser.expectToken(TokenType.Identifier, "if");
         parser.expectToken(TokenType.LeftParentheses);
@@ -50,6 +38,18 @@ public class ConditionalNode extends AstNode {
             elseBody = StatementNode.parse(parser);
 
         return new ConditionalNode(predicate, body, parser.getLocation(), elseBody);
+    }
+
+    public AstNode getPredicate() {
+        return Children.get(0);
+    }
+
+    public AstNode getBody() {
+        return Children.get(1);
+    }
+
+    public AstNode getElseBody() {
+        return Children.get(2);
     }
 
     public void visit(IVisitor visitor) {

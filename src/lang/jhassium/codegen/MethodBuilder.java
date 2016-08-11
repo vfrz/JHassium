@@ -21,6 +21,25 @@ import java.util.*;
 public class MethodBuilder extends HassiumObject {
 
     public HassiumClass Parent;
+    public String ReturnType;
+    public LinkedHashMap<Parameter, Integer> Parameters = new LinkedHashMap<>();
+    public List<Instruction> Instructions = new ArrayList<>();
+    public LinkedHashMap<Double, Integer> Labels = new LinkedHashMap<>();
+    public Stack<Double> BreakLabels = new Stack<>();
+    public Stack<Double> ContinueLabels = new Stack<>();
+    public String SourceRepresentation;
+    private String name = "";
+    public MethodBuilder() {
+        ReturnType = "";
+    }
+
+    public static <TKey, TValue extends ICloneable> LinkedHashMap<TKey, TValue> cloneDictionary(LinkedHashMap<TKey, TValue> original) {
+        LinkedHashMap<TKey, TValue> ret = new LinkedHashMap<>(original.size());
+        for (Map.Entry<TKey, TValue> entry : original.entrySet()) {
+            ret.put(entry.getKey(), (TValue) entry.getValue().clone());
+        }
+        return ret;
+    }
 
     public String getName() {
         return name;
@@ -31,24 +50,8 @@ public class MethodBuilder extends HassiumObject {
         addType(HassiumFunction.TypeDefinition);
     }
 
-    private String name = "";
-    public String ReturnType;
-
-    public LinkedHashMap<Parameter, Integer> Parameters = new LinkedHashMap<>();
-    public List<Instruction> Instructions = new ArrayList<>();
-
-    public LinkedHashMap<Double, Integer> Labels = new LinkedHashMap<>();
-    public Stack<Double> BreakLabels = new Stack<>();
-    public Stack<Double> ContinueLabels = new Stack<>();
-
-    public String SourceRepresentation;
-
     public boolean isConstructor() {
         return name.equals("new");
-    }
-
-    public MethodBuilder() {
-        ReturnType = "";
     }
 
     public HassiumObject invoke(VirtualMachine vm, HassiumObject[] args) {
@@ -84,14 +87,6 @@ public class MethodBuilder extends HassiumObject {
         }
         vm.getCallStack().pop();
         return returnValue;
-    }
-
-    public static <TKey, TValue extends ICloneable> LinkedHashMap<TKey, TValue> cloneDictionary(LinkedHashMap<TKey, TValue> original) {
-        LinkedHashMap<TKey, TValue> ret = new LinkedHashMap<>(original.size());
-        for (Map.Entry<TKey, TValue> entry : original.entrySet()) {
-            ret.put(entry.getKey(), (TValue) entry.getValue().clone());
-        }
-        return ret;
     }
 
     public void emit(SourceLocation location, InstructionType instructionType) {

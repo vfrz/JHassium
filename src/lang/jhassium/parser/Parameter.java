@@ -13,14 +13,6 @@ public class Parameter {
     private String name;
     private String type;
 
-    public String getName() {
-        return name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
     public Parameter(String name) {
         isEnforced = true;
         this.name = name;
@@ -30,6 +22,14 @@ public class Parameter {
         isEnforced = true;
         this.name = name;
         this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public boolean isEnforced() {

@@ -32,6 +32,7 @@ public class HassiumCompiler implements IVisitor {
     private MethodBuilder currentMethod;
 
     private boolean popExpressionStatementsFromStack = true;
+    private double nextSymbol = 0;
 
     public HassiumModule Compile(AstNode ast, SymbolTable table, String name) {
         this.table = table;
@@ -792,8 +793,6 @@ public class HassiumCompiler implements IVisitor {
             module.ConstantPool.add(new HassiumString(trait.getName()));
         return hassiumTrait;
     }
-
-    private double nextSymbol = 0;
 
     private double generateSymbol() {
         return ++nextSymbol;

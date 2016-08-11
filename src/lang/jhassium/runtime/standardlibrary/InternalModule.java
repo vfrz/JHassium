@@ -12,18 +12,17 @@ import java.util.List;
  */
 public class InternalModule extends HassiumObject {
 
+    public static List<InternalModule> InternalModules = new ArrayList<InternalModule>() {{
+        //TODO Add internal modules
+    }};
     private String name;
-
-    public String getName() {
-        return name;
-    }
 
     public InternalModule(String name) {
         this.name = name;
     }
 
-    public static List<InternalModule> InternalModules = new ArrayList<InternalModule>() {{
-        //TODO Add internal modules
-    }};
+    public String getName() {
+        return name;
+    }
 
 }

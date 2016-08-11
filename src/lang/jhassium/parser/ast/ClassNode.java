@@ -28,18 +28,6 @@ public class ClassNode extends AstNode {
         Location = location;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public AstNode getBody() {
-        return Children.get(0);
-    }
-
-    public List<String> getInherits() {
-        return inherits;
-    }
-
     public static ClassNode parse(Parser parser) {
         parser.expectToken(TokenType.Identifier, "class");
         String name = parser.expectToken(TokenType.Identifier).getValue();
@@ -52,6 +40,18 @@ public class ClassNode extends AstNode {
         AstNode body = StatementNode.parse(parser);
 
         return new ClassNode(name, body, inherits, parser.getLocation());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public AstNode getBody() {
+        return Children.get(0);
+    }
+
+    public List<String> getInherits() {
+        return inherits;
     }
 
     public void visit(IVisitor visitor) {

@@ -24,6 +24,17 @@ public class ForeachNode extends AstNode {
         Location = location;
     }
 
+    public static ForeachNode parse(Parser parser) {
+        parser.expectToken(TokenType.Identifier, "foreach");
+        parser.expectToken(TokenType.LeftParentheses);
+        String identifier = parser.expectToken(TokenType.Identifier).getValue();
+        parser.expectToken(TokenType.Identifier, "in");
+        AstNode expression = ExpressionNode.parse(parser);
+        parser.expectToken(TokenType.RightParentheses);
+        AstNode body = StatementNode.parse(parser);
+        return new ForeachNode(identifier, expression, body, parser.getLocation());
+    }
+
     public String getIdentifier() {
         return identifier;
     }
@@ -34,17 +45,6 @@ public class ForeachNode extends AstNode {
 
     public AstNode getBody() {
         return Children.get(1);
-    }
-
-    public static ForeachNode parse(Parser parser) {
-        parser.expectToken(TokenType.Identifier, "foreach");
-        parser.expectToken(TokenType.LeftParentheses);
-        String identifier = parser.expectToken(TokenType.Identifier).getValue();
-        parser.expectToken(TokenType.Identifier, "in");
-        AstNode expression = ExpressionNode.parse(parser);
-        parser.expectToken(TokenType.RightParentheses);
-        AstNode body = StatementNode.parse(parser);
-        return new ForeachNode(identifier, expression, body, parser.getLocation());
     }
 
     public void visit(IVisitor visitor) {

@@ -20,14 +20,14 @@ public class ReturnNode extends AstNode {
         Location = location;
     }
 
-    public AstNode getExpression() {
-        return Children.get(0);
-    }
-
     public static ReturnNode parse(Parser parser) {
         parser.expectToken(TokenType.Identifier, "return");
         AstNode expression = ExpressionNode.parse(parser);
         return new ReturnNode(expression, parser.getLocation());
+    }
+
+    public AstNode getExpression() {
+        return Children.get(0);
     }
 
     public void visit(IVisitor visitor) {

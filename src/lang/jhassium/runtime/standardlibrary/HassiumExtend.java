@@ -14,16 +14,16 @@ public class HassiumExtend extends HassiumObject {
     private MethodBuilder target;
     private HassiumClass additions;
 
+    public HassiumExtend(MethodBuilder target, HassiumClass additions) {
+        this.target = target;
+        this.additions = additions;
+    }
+
     public MethodBuilder getTarget() {
         return target;
     }
 
     public HassiumClass getAdditions() {
         return additions;
-    }
-
-    public HassiumExtend(MethodBuilder target, HassiumClass additions) {
-        this.target = target;
-        this.additions = additions;
     }
 }

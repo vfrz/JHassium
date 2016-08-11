@@ -17,20 +17,7 @@ public class HassiumDouble extends HassiumObject {
     public static HassiumTypeDefinition TypeDefinition = new HassiumTypeDefinition("double");
 
     private double value;
-
-    public Double getValue() {
-        return value;
-    }
-
-    public int getValueInt() {
-        return (int) value;
-    }
-
-    public static HassiumDouble create(HassiumObject obj) {
-        if (!(obj instanceof HassiumDouble))
-            HassiumLogger.error(String.format("Cannot convert from %1s to double!", obj.type()));
-        return (HassiumDouble) obj;
-    }
+    private int enumerableIndex = 0;
 
     public HassiumDouble(double value) {
         this.value = value;
@@ -59,6 +46,20 @@ public class HassiumDouble extends HassiumObject {
             HassiumLogger.error("Internal error HassiumDouble : " + e.getMessage());
         }
         addType(HassiumDouble.TypeDefinition);
+    }
+
+    public static HassiumDouble create(HassiumObject obj) {
+        if (!(obj instanceof HassiumDouble))
+            HassiumLogger.error(String.format("Cannot convert from %1s to double!", obj.type()));
+        return (HassiumDouble) obj;
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public int getValueInt() {
+        return (int) value;
     }
 
     public HassiumBool toBool(VirtualMachine vm, HassiumObject[] args) {
@@ -177,8 +178,6 @@ public class HassiumDouble extends HassiumObject {
         HassiumLogger.error("Cannot operate HassiumDouble on " + args[0].getClass().getName());
         return null; //Not reachable but for compilation
     }
-
-    private int enumerableIndex = 0;
 
     public HassiumBool __enumerablefull__(VirtualMachine vm, HassiumObject[] args) {
         return new HassiumBool(enumerableIndex >= value);

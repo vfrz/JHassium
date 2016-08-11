@@ -26,6 +26,15 @@ import static lang.jhassium.runtime.standardlibrary.types.HassiumTypesModule.Ins
  */
 public class VirtualMachine {
 
+    private StackFrame stackFrame;
+    private Stack<HassiumObject> stack;
+    private Stack<String> callStack = new Stack<>();
+    private Stack<HassiumExceptionHandler> handlers = new Stack<HassiumExceptionHandler>();
+    private LinkedHashMap<String, HassiumObject> globals;
+    private HassiumModule module;
+    private SourceLocation sourceLocation;
+    private LinkedHashMap<MethodBuilder, Integer> exceptionReturns = new LinkedHashMap<>();
+
     public StackFrame getStackFrame() {
         return stackFrame;
     }
@@ -53,16 +62,6 @@ public class VirtualMachine {
     public HassiumModule getCurrentlyExecutingModule() {
         return module;
     }
-
-    private StackFrame stackFrame;
-    private Stack<HassiumObject> stack;
-    private Stack<String> callStack = new Stack<>();
-    private Stack<HassiumExceptionHandler> handlers = new Stack<HassiumExceptionHandler>();
-
-    private LinkedHashMap<String, HassiumObject> globals;
-    private HassiumModule module;
-    private SourceLocation sourceLocation;
-    private LinkedHashMap<MethodBuilder, Integer> exceptionReturns = new LinkedHashMap<>();
 
     public void execute(HassiumModule module, List<String> args) {
         globals = new LinkedHashMap<>();

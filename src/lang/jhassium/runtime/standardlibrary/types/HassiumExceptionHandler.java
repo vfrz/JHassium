@@ -17,24 +17,10 @@ import lang.jhassium.utils.HassiumLogger;
 public class HassiumExceptionHandler extends HassiumObject {
 
     public static HassiumTypeDefinition TypeDefinition = new HassiumTypeDefinition("ExceptionHandler");
-
+    public Frame Frame;
     private MethodBuilder sourceMethod;
     private MethodBuilder handlerMethod;
     private double label;
-
-    public Frame Frame;
-
-    public MethodBuilder getSourceMethod() {
-        return sourceMethod;
-    }
-
-    public MethodBuilder getHandlerMethod() {
-        return handlerMethod;
-    }
-
-    public double getLabel() {
-        return label;
-    }
 
     public HassiumExceptionHandler(MethodBuilder sourceMethod, MethodBuilder handlerMethod, double label) {
         this.sourceMethod = sourceMethod;
@@ -46,6 +32,18 @@ public class HassiumExceptionHandler extends HassiumObject {
             HassiumLogger.error("Internal error HassiumExceptionHandler : " + e.getMessage());
         }
         addType(HassiumExceptionHandler.TypeDefinition);
+    }
+
+    public MethodBuilder getSourceMethod() {
+        return sourceMethod;
+    }
+
+    public MethodBuilder getHandlerMethod() {
+        return handlerMethod;
+    }
+
+    public double getLabel() {
+        return label;
     }
 
     public HassiumObject __invoke__(VirtualMachine vm, HassiumObject[] args) {

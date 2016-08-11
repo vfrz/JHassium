@@ -27,14 +27,6 @@ public class LambdaNode extends AstNode {
         Location = location;
     }
 
-    public List<String> getParameters() {
-        return parameters;
-    }
-
-    public AstNode getBody() {
-        return Children.get(0);
-    }
-
     public static LambdaNode parse(Parser parser) {
         parser.expectToken(TokenType.Identifier, "lambda");
         List<String> parameters = new ArrayList<>();
@@ -42,6 +34,14 @@ public class LambdaNode extends AstNode {
         parameters.addAll(args.Children.stream().map(child -> ((IdentifierNode) child).getIdentifier()).collect(Collectors.toList()));
         AstNode body = StatementNode.parse(parser);
         return new LambdaNode(parameters, body, parser.getLocation());
+    }
+
+    public List<String> getParameters() {
+        return parameters;
+    }
+
+    public AstNode getBody() {
+        return Children.get(0);
     }
 
     public void visit(IVisitor visitor) {

@@ -28,14 +28,6 @@ public class SwitchNode extends AstNode {
         Location = location;
     }
 
-    public AstNode getPredicate() {
-        return predicate;
-    }
-
-    public AstNode getDefaultCase() {
-        return defaultCase;
-    }
-
     public static SwitchNode parse(Parser parser) {
         parser.expectToken(TokenType.Identifier, "switch");
         parser.expectToken(TokenType.LeftParentheses);
@@ -50,6 +42,14 @@ public class SwitchNode extends AstNode {
             defaultCase = StatementNode.parse(parser);
         parser.expectToken(TokenType.RightBrace);
         return new SwitchNode(predicate, cases, defaultCase, parser.getLocation());
+    }
+
+    public AstNode getPredicate() {
+        return predicate;
+    }
+
+    public AstNode getDefaultCase() {
+        return defaultCase;
     }
 
     public void visit(IVisitor visitor) {
