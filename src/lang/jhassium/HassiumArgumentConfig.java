@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * File : HassiumArgumentConfig.java
  * Description : None
- * Author : FRITZ Valentin
+ * Authors : FRITZ Valentin, Jacob Misirian & zdimension
  * Website : https://github.com/vfrz/JHassium
  * Date : 10/08/2016 20:05
  */

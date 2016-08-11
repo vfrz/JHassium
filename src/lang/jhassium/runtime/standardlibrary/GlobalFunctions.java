@@ -12,7 +12,7 @@ import java.util.Scanner;
 /**
  * File : GlobalFunctions.java
  * Description : None
- * Author : FRITZ Valentin
+ * Authors : FRITZ Valentin, Jacob Misirian & zdimension
  * Website : https://github.com/vfrz/JHassium
  * Date : 11/08/2016 16:35
  */

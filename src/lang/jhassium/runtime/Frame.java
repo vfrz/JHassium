@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 /**
  * File : Frame.java
  * Description : None
- * Author : FRITZ Valentin
+ * Authors : FRITZ Valentin, Jacob Misirian & zdimension
  * Website : https://github.com/vfrz/JHassium
  * Date : 11/08/2016 13:29
  */

@@ -8,7 +8,7 @@ import lang.jhassium.utils.HassiumLogger;
 /**
  * File : HassiumInt.java
  * Description : None
- * Author : FRITZ Valentin
+ * Authors : FRITZ Valentin, Jacob Misirian & zdimension
  * Website : https://github.com/vfrz/JHassium
  * Date : 11/08/2016 00:04
  */
