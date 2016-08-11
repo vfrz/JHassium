@@ -109,355 +109,145 @@ public class HassiumChar extends HassiumObject {
     private HassiumObject __add__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this + (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return this + (HassiumInt) obj;
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name);
+            return new HassiumChar((char) (this.getValue() + (char) ((HassiumChar) obj).getValue()));
+        else if (obj instanceof HassiumInt)
+            return new HassiumChar((char) (this.getValue() + ((HassiumInt) obj).getValue()));
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumObject __sub__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this - (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return this - (HassiumInt) obj;
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name);
+            return new HassiumChar((char) (this.getValue() - (char) ((HassiumChar) obj).getValue()));
+        else if (obj instanceof HassiumInt)
+            return new HassiumChar((char) (this.getValue() - ((HassiumInt) obj).getValue()));
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumObject __mul__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this * (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return this * (HassiumInt) obj;
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name);
+            return new HassiumChar((char) (this.getValue() * (char) ((HassiumChar) obj).getValue()));
+        else if (obj instanceof HassiumInt)
+            return new HassiumChar((char) (this.getValue() * ((HassiumInt) obj).getValue()));
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumObject __div__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this / (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return this / (HassiumInt) obj;
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name);
+            return new HassiumChar((char) (this.getValue() / (char) ((HassiumChar) obj).getValue()));
+        else if (obj instanceof HassiumInt)
+            return new HassiumChar((char) (this.getValue() / ((HassiumInt) obj).getValue()));
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumObject __mod__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this % (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return this % (HassiumInt) obj;
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name);
+            return new HassiumChar((char) (this.getValue() % (char) ((HassiumChar) obj).getValue()));
+        else if (obj instanceof HassiumInt)
+            return new HassiumChar((char) (this.getValue() % ((HassiumInt) obj).getValue()));
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumObject __xor__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this ^ (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return this ^ (HassiumInt) obj;
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name);
+            return new HassiumChar((char) (this.getValue() ^ (char) ((HassiumChar) obj).getValue()));
+        else if (obj instanceof HassiumInt)
+            return new HassiumChar((char) (this.getValue() ^ ((HassiumInt) obj).getValue()));
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumObject __or__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this | (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return this | (HassiumInt) obj;
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name);
+            return new HassiumChar((char) (this.getValue() | (char) ((HassiumChar) obj).getValue()));
+        else if (obj instanceof HassiumInt)
+            return new HassiumChar((char) (this.getValue() | ((HassiumInt) obj).getValue()));
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumObject __xand__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this & (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return this & (HassiumInt) obj;
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name);
+            return new HassiumChar((char) (this.getValue() & (char) ((HassiumChar) obj).getValue()));
+        else if (obj instanceof HassiumInt)
+            return new HassiumChar((char) (this.getValue() & ((HassiumInt) obj).getValue()));
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumObject __equals__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this == (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return new HassiumBool(Value == ((HassiumInt) obj).Value);
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name);
+            return new HassiumBool(this.getValue() == ((HassiumChar) obj).getValue());
+        else if (obj instanceof HassiumInt)
+            return new HassiumBool(value == ((HassiumInt) obj).getValue());
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumObject __notequals__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this != (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return new HassiumBool(Value != ((HassiumInt) obj).Value);
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name);
+            return new HassiumBool((char) this.getValue() != ((HassiumChar) obj).getValue());
+        else if (obj instanceof HassiumInt)
+            return new HassiumBool((char) this.getValue() != ((HassiumInt) obj).getValue());
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumObject __greater__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this > (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return this > (HassiumInt) obj;
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name);
+            return new HassiumBool(this.getValue() > ((HassiumChar)obj).getValue());
+        else if (obj instanceof HassiumInt)
+            return new HassiumBool(this.getValue() > ((HassiumInt)obj).getValue());
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumObject __lesser__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this < (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return this < (HassiumInt) obj;
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name);
+            return new HassiumBool(this.getValue() < ((HassiumChar)obj).getValue());
+        else if (obj instanceof HassiumInt)
+            return new HassiumBool(this.getValue() < ((HassiumInt)obj).getValue());
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumObject __greaterorequal__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this >= (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return this >= (HassiumInt) obj;
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name);
+            return new HassiumBool(this.getValue() >= ((HassiumChar)obj).getValue());
+        else if (obj instanceof HassiumInt)
+            return new HassiumBool(this.getValue() >= ((HassiumInt)obj).getValue());
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumObject __lesserorequal__(VirtualMachine vm, HassiumObject[] args) {
         HassiumObject obj = args[0];
         if (obj instanceof HassiumChar)
-        return this <= (HassiumChar) obj;
-            else if (obj instanceof HassiumInt)
-        return this <= (HassiumInt) obj;
-        throw new InternalException("Cannot operate char on " + obj.GetType().Name.GetType().Name);
+            return new HassiumBool(this.getValue() <= ((HassiumChar)obj).getValue());
+        else if (obj instanceof HassiumInt)
+            return new HassiumBool(this.getValue() <= ((HassiumInt)obj).getValue());
+        HassiumLogger.error("Cannot operate char on " + obj.getClass().getName());
+        return null; //Not reachable but for compilation
     }
 
     private HassiumString __tostring__(VirtualMachine vm, HassiumObject[] args) {
-        return new HassiumString(Value.ToString());
-    }
-
-    public static HassiumChar operator +(
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value + right.Value));
-    }
-
-    public static HassiumChar operator +(
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value + right.Value));
-    }
-
-    public static HassiumChar operator -(
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value - right.Value));
-    }
-
-    public static HassiumChar operator -(
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value - right.Value));
-    }
-
-    public static HassiumChar operator *(
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value * right.Value));
-    }
-
-    public static HassiumChar operator *(
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value * right.Value));
-    }
-
-    public static HassiumChar operator /(
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value / right.Value));
-    }
-
-    public static HassiumChar operator /(
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value / right.Value));
-    }
-
-    public static HassiumChar operator %(
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value % right.Value));
-    }
-
-    public static HassiumChar operator %(
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value % right.Value));
-    }
-
-    public static HassiumChar operator ^(
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value ^ right.Value));
-    }
-
-    public static HassiumChar operator ^(
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value ^ right.Value));
-    }
-
-    public static HassiumChar operator |(
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value | right.Value));
-    }
-
-    public static HassiumChar operator |(
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value | right.Value));
-    }
-
-    public static HassiumChar operator &(
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value & right.Value));
-    }
-
-    public static HassiumChar operator &(
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumChar((char) (left.Value & right.Value));
-    }
-
-    public static HassiumBool operator ==(
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumBool(left.Value == right.Value);
-    }
-
-    public static HassiumBool operator ==(
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumBool((int) left.Value == right.Value);
-    }
-
-    public static HassiumBool operator !=(
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumBool(left.Value != right.Value);
-    }
-
-    public static HassiumBool operator !=(
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumBool((int) left.Value != right.Value);
-    }
-
-    public static HassiumBool operator >(
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumBool(left.Value > right.Value);
-    }
-
-    public static HassiumBool operator >(
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumBool((int) left.Value > right.Value);
-    }
-
-    public static HassiumBool operator < (
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumBool(left.Value < right.Value);
-    }
-
-    public static HassiumBool operator < (
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumBool((int) left.Value < right.Value);
-    }
-
-    public static HassiumBool operator >=(
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumBool(left.Value >= right.Value);
-    }
-
-    public static HassiumBool operator >=(
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumBool((int) left.Value >= right.Value);
-    }
-
-    public static HassiumBool operator <=(
-    HassiumChar left, HassiumChar
-    right)
-
-    {
-        return new HassiumBool(left.Value <= right.Value);
-    }
-
-    public static HassiumBool operator <=(
-    HassiumChar left, HassiumInt
-    right)
-
-    {
-        return new HassiumBool((int) left.Value <= right.Value);
+        return new HassiumString(Character.toString(value));
     }
 
     public boolean equals(Object obj) {

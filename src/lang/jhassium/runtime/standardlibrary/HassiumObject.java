@@ -1,5 +1,6 @@
 package lang.jhassium.runtime.standardlibrary;
 
+import com.rits.cloning.Cloner;
 import lang.jhassium.runtime.VirtualMachine;
 import lang.jhassium.runtime.HassiumTypeDefinition;
 import lang.jhassium.runtime.standardlibrary.types.HassiumBool;
@@ -18,7 +19,7 @@ import java.util.List;
  * Website : https://github.com/vfrz/JHassium
  * Date : 10/08/2016 22:40
  */
-public class HassiumObject {
+public class HassiumObject implements ICloneable {
 
     public static HassiumNull Null = new HassiumNull();
     public static final String ADD_FUNCTION =              "__add__";
@@ -229,13 +230,14 @@ public class HassiumObject {
         return type().toString(vm);
     }
 
-    public Object Clone()
+    public Object clone()
     {
         try {
-            return this.clone(); //HACK Verify this
-        } catch (CloneNotSupportedException e) {
+            return new Cloner().shallowClone(this); //HACK Verify this
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
 }

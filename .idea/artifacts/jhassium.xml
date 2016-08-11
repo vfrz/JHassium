@@ -7,6 +7,8 @@
       </element>
       <element id="extracted-dir" path="$PROJECT_DIR$/libs/commons-io-2.5/commons-io-2.5.jar" path-in-jar="/" />
       <element id="module-output" name="JHassium" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/cloning.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/objenesis-2.4.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

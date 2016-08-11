@@ -13,6 +13,14 @@ public class Parameter {
     private String name;
     private String type;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
     public Parameter(String name) {
         this(name, null);
     }
