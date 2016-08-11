@@ -29,6 +29,7 @@ public class MethodBuilder extends HassiumObject {
     public Stack<Double> ContinueLabels = new Stack<>();
     public String SourceRepresentation;
     private String name = "";
+
     public MethodBuilder() {
         ReturnType = "";
     }

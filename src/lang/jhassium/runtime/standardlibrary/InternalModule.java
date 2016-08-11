@@ -1,5 +1,8 @@
 package lang.jhassium.runtime.standardlibrary;
 
+import lang.jhassium.runtime.standardlibrary.math.HassiumMathModule;
+import lang.jhassium.runtime.standardlibrary.text.HassiumTextModule;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +16,8 @@ import java.util.List;
 public class InternalModule extends HassiumObject {
 
     public static List<InternalModule> InternalModules = new ArrayList<InternalModule>() {{
+        add(new HassiumTextModule());
+        add(new HassiumMathModule());
         //TODO Add internal modules
     }};
     private String name;
