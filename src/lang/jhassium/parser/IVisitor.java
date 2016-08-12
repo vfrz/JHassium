@@ -58,7 +58,7 @@ public interface IVisitor {
 
     void accept(IdentifierNode node);
 
-    void accept(Int64Node node);
+    void accept(IntNode node);
 
     void accept(KeyValuePairNode node);
 

@@ -334,8 +334,8 @@ public class ExpressionNode extends AstNode {
             return LambdaNode.parse(parser);
         else if (parser.matchToken(TokenType.Identifier))
             return new IdentifierNode(parser.expectToken(TokenType.Identifier).getValue(), parser.getLocation());
-        else if (parser.matchToken(TokenType.Int64))
-            return new Int64Node(Integer.parseInt(parser.expectToken(TokenType.Int64).getValue()), parser.getLocation());
+        else if (parser.matchToken(TokenType.Int))
+            return new IntNode(Integer.parseInt(parser.expectToken(TokenType.Int).getValue()), parser.getLocation());
         else if (parser.matchToken(TokenType.Double))
             return new DoubleNode(Double.parseDouble(parser.expectToken(TokenType.Double).getValue()), parser.getLocation());
         else if (parser.matchToken(TokenType.String))

@@ -83,7 +83,7 @@ public class SemanticAnalyzer implements IVisitor {
     public void accept(IdentifierNode node) {
     }
 
-    public void accept(Int64Node node) {
+    public void accept(IntNode node) {
     }
 
     public void accept(NewNode node) {

@@ -41,7 +41,7 @@ public class HassiumStack extends HassiumObject {
             hassiumStack.Attributes.put("pop", new HassiumFunction(hassiumStack.getClass().getDeclaredMethod("pop", VirtualMachine.class, HassiumObject[].class), hassiumStack, 0));
             hassiumStack.Attributes.put("push", new HassiumFunction(hassiumStack.getClass().getDeclaredMethod("push", VirtualMachine.class, HassiumObject[].class), hassiumStack, -1));
             hassiumStack.Attributes.put("toList", new HassiumFunction(hassiumStack.getClass().getDeclaredMethod("toList", VirtualMachine.class, HassiumObject[].class), hassiumStack, 0));
-            hassiumStack.Attributes.put(HassiumObject.TOSTRING_FUNCTION, new HassiumFunction(hassiumStack.getClass().getDeclaredMethod("toString", VirtualMachine.class, HassiumObject[].class), hassiumStack, 0));
+            hassiumStack.Attributes.put(HassiumObject.TOSTRING_FUNCTION, new HassiumFunction(hassiumStack.getClass().getDeclaredMethod("tostring", VirtualMachine.class, HassiumObject[].class), hassiumStack, 0));
             hassiumStack.Attributes.put(HassiumObject.INDEX_FUNCTION, new HassiumFunction(hassiumStack.getClass().getDeclaredMethod("__index__", VirtualMachine.class, HassiumObject[].class), hassiumStack, 1));
             hassiumStack.Attributes.put(HassiumObject.STORE_INDEX_FUNCTION, new HassiumFunction(hassiumStack.getClass().getDeclaredMethod("__storeindex__", VirtualMachine.class, HassiumObject[].class), hassiumStack, 2));
             hassiumStack.Attributes.put(HassiumObject.ENUMERABLE_FULL, new HassiumFunction(hassiumStack.getClass().getDeclaredMethod("__enumerablefull__", VirtualMachine.class, HassiumObject[].class), hassiumStack, 0));
@@ -73,11 +73,13 @@ public class HassiumStack extends HassiumObject {
         return new HassiumList((HassiumObject[]) Stack.toArray());
     }
 
-    public HassiumString toString(VirtualMachine vm, HassiumObject[] args) {
+    public HassiumString tostring(VirtualMachine vm, HassiumObject[] args) {
         StringBuilder sb = new StringBuilder();
-        for (HassiumObject obj : Stack)
-            sb.append(obj.toString(vm) + " ");
-
+        sb.append("{ ");
+        for (int i = 0; i < Stack.size() - 1; i++)
+            sb.append(Stack.get(i).toString(vm) + " , ");
+        sb.append(Stack.get(Stack.size() - 1).toString(vm));
+        sb.append(" }");
         return new HassiumString(sb.toString());
     }
 

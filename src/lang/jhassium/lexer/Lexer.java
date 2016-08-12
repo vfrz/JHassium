@@ -262,13 +262,13 @@ public class Lexer {
         }
         if (!bname.equals("")) {
             try {
-                return new Token(TokenType.Int64, Integer.toString(Integer.parseInt(finalString.substring(2), bsize)), location);
+                return new Token(TokenType.Int, Integer.toString(Integer.parseInt(finalString.substring(2), bsize)), location);
             } catch (Exception ex) {
                 HassiumLogger.error("Invalid " + bname + " number: " + finalString + " at " + location);
             }
         } else {
             try {
-                return new Token(TokenType.Int64, Integer.toString(Integer.parseInt(finalString)), location);
+                return new Token(TokenType.Int, Integer.toString(Integer.parseInt(finalString)), location);
             } catch (Exception ex) {
                 try {
                     return new Token(TokenType.Double,

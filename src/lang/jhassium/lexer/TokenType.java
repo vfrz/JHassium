@@ -17,7 +17,7 @@ public enum TokenType {
     Dot,
     Double,
     Identifier,
-    Int64,
+    Int,
     LeftBrace,
     LeftParentheses,
     LeftSquare,

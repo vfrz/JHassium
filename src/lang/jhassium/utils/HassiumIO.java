@@ -21,12 +21,28 @@ import java.util.zip.ZipOutputStream;
 public class HassiumIO {
 
     public static String readAllText(String path) {
+        BufferedReader br = null;
+        String result = "";
         try {
-            return FileUtils.readFileToString(new File(path), Charset.defaultCharset());
-        } catch (IOException e) {
+            br = new BufferedReader(new FileReader(path));
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+            while (line != null) {
+                sb.append(line);
+                sb.append("\n");
+                line = br.readLine();
+            }
+            result = sb.toString();
+        } catch (Exception ex) {
             HassiumLogger.error("Error while reading file : " + path);
+        } finally {
+            try {
+                br.close();
+            } catch (IOException e) {
+                HassiumLogger.error("Error while reading file : " + path);
+            }
         }
-        return null;
+        return result;
     }
 
     public static void writeAllText(String path, String content) {

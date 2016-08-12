@@ -521,10 +521,10 @@ public class HassiumCompiler implements IVisitor {
             currentMethod.emit(node.Location, InstructionType.Load_Local, table.getIndex(node.getIdentifier()));
     }
 
-    public void accept(Int64Node node) {
-        if (!containsInt64Constant(node.getNumber()))
+    public void accept(IntNode node) {
+        if (!containsIntConstant(node.getNumber()))
             module.ConstantPool.add(new HassiumInt(node.getNumber()));
-        currentMethod.emit(node.Location, InstructionType.Push_Object, findInt64Index(node.getNumber()));
+        currentMethod.emit(node.Location, InstructionType.Push_Object, findIntIndex(node.getNumber()));
     }
 
     public void accept(KeyValuePairNode node) {
@@ -732,7 +732,7 @@ public class HassiumCompiler implements IVisitor {
         return -1;
     }
 
-    private int findInt64Index(int constant) {
+    private int findIntIndex(int constant) {
         for (int i = 0; i < module.ConstantPool.size(); i++)
             if (module.ConstantPool.get(i) instanceof HassiumInt)
                 if (((HassiumInt) module.ConstantPool.get(i)).getValue() == constant)
@@ -757,7 +757,7 @@ public class HassiumCompiler implements IVisitor {
         return false;
     }
 
-    private boolean containsInt64Constant(int constant) {
+    private boolean containsIntConstant(int constant) {
         for (HassiumObject obj : module.ConstantPool) {
             if (obj instanceof HassiumInt)
                 if (((HassiumInt) obj).getValue() == constant)

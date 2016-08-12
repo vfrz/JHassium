@@ -151,7 +151,11 @@ public class HassiumList extends HassiumObject {
 
     public HassiumString __tostring__(VirtualMachine vm, HassiumObject[] args) {
         StringBuilder sb = new StringBuilder();
-        for (HassiumObject obj : value) sb.append(obj.toString(vm) + " ");
+        sb.append("{ ");
+        for (int i = 0; i < value.size() - 1; i++)
+            sb.append(value.get(i).toString(vm) + " , ");
+        sb.append(value.get(value.size() - 1).toString(vm));
+        sb.append(" }");
         return new HassiumString(sb.toString());
     }
 

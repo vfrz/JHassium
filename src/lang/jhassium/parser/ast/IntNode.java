@@ -5,17 +5,17 @@ import lang.jhassium.parser.AstNode;
 import lang.jhassium.parser.IVisitor;
 
 /**
- * File : Int64Node.java
+ * File : IntNode.java
  * Description : None
  * Authors : FRITZ Valentin, Jacob Misirian & zdimension
  * Website : https://github.com/vfrz/JHassium
  * Date : 10/08/2016 22:07
  */
-public class Int64Node extends AstNode {
+public class IntNode extends AstNode {
 
     private int number;
 
-    public Int64Node(int number, SourceLocation location) {
+    public IntNode(int number, SourceLocation location) {
         this.number = number;
         Location = location;
     }
