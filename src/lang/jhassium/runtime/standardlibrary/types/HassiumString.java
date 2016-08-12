@@ -163,7 +163,7 @@ public class HassiumString extends HassiumObject {
     }
 
     public HassiumInt toInt(VirtualMachine vm, HassiumObject[] args) {
-        return new HassiumInt(Long.parseLong(value));
+        return new HassiumInt(Integer.parseInt(value));
     }
 
     public HassiumList toList(VirtualMachine vm, HassiumObject[] args) {
@@ -230,7 +230,7 @@ public class HassiumString extends HassiumObject {
         if (obj instanceof HassiumDouble)
             return new HassiumChar(value.charAt(((HassiumDouble) obj).getValueInt()));
         else if (obj instanceof HassiumInt)
-            return new HassiumChar(value.charAt(((HassiumInt) obj).getValue().intValue()));
+            return new HassiumChar(value.charAt(((HassiumInt) obj).getValue()));
         HassiumLogger.error("Cannot index string with " + obj);
         return null; //Not reachable but for compilation
     }

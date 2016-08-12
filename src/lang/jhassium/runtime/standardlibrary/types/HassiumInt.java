@@ -16,9 +16,9 @@ public class HassiumInt extends HassiumObject {
 
     public static HassiumTypeDefinition TypeDefinition = new HassiumTypeDefinition("int");
 
-    private long value;
+    private int value;
 
-    public HassiumInt(long value) {
+    public HassiumInt(int value) {
         this.value = value;
         try {
             Attributes.put("toBool", new HassiumFunction(this.getClass().getDeclaredMethod("toBool", VirtualMachine.class, HassiumObject[].class), this, 0));
@@ -56,7 +56,7 @@ public class HassiumInt extends HassiumObject {
         return (HassiumInt) obj;
     }
 
-    public Long getValue() {
+    public Integer getValue() {
         return value;
     }
 
@@ -77,9 +77,12 @@ public class HassiumInt extends HassiumObject {
     }
 
     public HassiumObject __add__(VirtualMachine vm, HassiumObject[] args) {
-        if (args[0] instanceof HassiumDouble)
-            return new HassiumDouble(value + ((HassiumDouble) args[0]).getValue());
-        else if (args[0] instanceof HassiumInt)
+        if (args[0] instanceof HassiumDouble) {
+            if (((HassiumDouble) args[0]).getValue() == ((HassiumDouble) args[0]).getValue().intValue())
+                return new HassiumInt(value + ((HassiumDouble) args[0]).getValue().intValue());
+            else
+                return new HassiumDouble(value + ((HassiumDouble) args[0]).getValue());
+        } else if (args[0] instanceof HassiumInt)
             return new HassiumInt(value + ((HassiumInt) args[0]).getValue());
         else if (args[0] instanceof HassiumString)
             return new HassiumString(value + args[0].toString(vm));
@@ -190,7 +193,7 @@ public class HassiumInt extends HassiumObject {
     }
 
     public HassiumString __tostring__(VirtualMachine vm, HassiumObject[] args) {
-        return new HassiumString(Long.toString(value));
+        return new HassiumString(Integer.toString(value));
     }
 
     public HassiumObject __bcompl__(VirtualMachine vm, HassiumObject[] args) {

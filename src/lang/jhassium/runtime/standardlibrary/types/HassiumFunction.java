@@ -4,7 +4,6 @@ import lang.jhassium.runtime.HassiumTypeDefinition;
 import lang.jhassium.runtime.VirtualMachine;
 import lang.jhassium.runtime.standardlibrary.HassiumObject;
 import lang.jhassium.utils.HassiumLogger;
-import lang.jhassium.utils.Helpers;
 
 import java.lang.reflect.Method;
 
@@ -49,7 +48,7 @@ public class HassiumFunction extends HassiumObject {
                     if (vm != null)
                         vm.getCallStack().pop();
                     try {
-                        return Helpers.as(target.invoke(object, vm, args), HassiumObject.class);
+                        return (HassiumObject) target.invoke(object, vm, args);
                         //return (HassiumObject) target.invoke(object, vm, args);
                     } catch (Exception e) {
                         HassiumLogger.error("Error while invoking HassiumFunction with target name : " + target.getName());

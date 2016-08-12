@@ -44,14 +44,14 @@ public class GlobalFunctions {
     }};
 
     public static HassiumNull exit(VirtualMachine vm, HassiumObject[] args) {
-        System.exit(HassiumInt.create(args[0]).getValue().intValue());
+        System.exit(HassiumInt.create(args[0]).getValue());
         return HassiumObject.Null; // Not reachable but for compilation
     }
 
     public static HassiumList fillList(VirtualMachine vm, HassiumObject[] args) {
-        HassiumList list = HassiumList.Create(args[0]);
+        HassiumList list = HassiumList.create(args[0]);
         HassiumObject filler = (args.length == 3) ? args[2] : new HassiumInt(0);
-        int max = HassiumInt.create(args[1]).getValue().intValue();
+        int max = HassiumInt.create(args[1]).getValue();
         for (int i = 0; i < max; i++)
             list.getValue().add(Helpers.as(filler.clone(), HassiumObject.class));
         return list;
@@ -134,9 +134,9 @@ public class GlobalFunctions {
     }
 
     public static HassiumObject range(VirtualMachine vm, HassiumObject[] args) {
-        int max = HassiumInt.create(args[1]).getValue().intValue();
+        int max = HassiumInt.create(args[1]).getValue();
         HassiumList list = new HassiumList(new HassiumObject[0]);
-        for (int i = HassiumInt.create(args[0]).getValue().intValue(); i < max; i++)
+        for (int i = HassiumInt.create(args[0]).getValue(); i < max; i++)
             list.getValue().add(new HassiumInt(i));
 
         return list;
@@ -153,7 +153,7 @@ public class GlobalFunctions {
 
     public static HassiumNull sleep(VirtualMachine vm, HassiumObject[] args) {
         try {
-            Thread.sleep(HassiumInt.create(args[0]).getValue().intValue());
+            Thread.sleep(HassiumInt.create(args[0]).getValue());
         } catch (InterruptedException e) {
             HassiumLogger.error("Error while sleep : " + e.getMessage());
         }

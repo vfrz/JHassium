@@ -260,7 +260,7 @@ public class Lexer {
             bname = "octal";
             bsize = 8;
         }
-        if (bname != "") {
+        if (!bname.equals("")) {
             try {
                 return new Token(TokenType.Int64, Integer.toString(Integer.parseInt(finalString.substring(2), bsize)), location);
             } catch (Exception ex) {
@@ -268,7 +268,7 @@ public class Lexer {
             }
         } else {
             try {
-                return new Token(TokenType.Int64, Long.toString(Long.parseLong(finalString)), location);
+                return new Token(TokenType.Int64, Integer.toString(Integer.parseInt(finalString)), location);
             } catch (Exception ex) {
                 try {
                     return new Token(TokenType.Double,

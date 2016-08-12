@@ -1,5 +1,7 @@
 package lang.jhassium.runtime.standardlibrary;
 
+import lang.jhassium.runtime.standardlibrary.collections.HassiumCollectionsModule;
+import lang.jhassium.runtime.standardlibrary.io.HassiumIOModule;
 import lang.jhassium.runtime.standardlibrary.math.HassiumMathModule;
 import lang.jhassium.runtime.standardlibrary.text.HassiumTextModule;
 
@@ -18,6 +20,8 @@ public class InternalModule extends HassiumObject {
     public static List<InternalModule> InternalModules = new ArrayList<InternalModule>() {{
         add(new HassiumTextModule());
         add(new HassiumMathModule());
+        add(new HassiumCollectionsModule());
+        add(new HassiumIOModule());
         //TODO Add internal modules
     }};
     private String name;

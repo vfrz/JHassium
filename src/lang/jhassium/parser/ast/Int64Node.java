@@ -13,14 +13,14 @@ import lang.jhassium.parser.IVisitor;
  */
 public class Int64Node extends AstNode {
 
-    private long number;
+    private int number;
 
-    public Int64Node(long number, SourceLocation location) {
+    public Int64Node(int number, SourceLocation location) {
         this.number = number;
         Location = location;
     }
 
-    public long getNumber() {
+    public int getNumber() {
         return number;
     }
 

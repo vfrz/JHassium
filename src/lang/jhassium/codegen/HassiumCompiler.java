@@ -732,7 +732,7 @@ public class HassiumCompiler implements IVisitor {
         return -1;
     }
 
-    private int findInt64Index(long constant) {
+    private int findInt64Index(int constant) {
         for (int i = 0; i < module.ConstantPool.size(); i++)
             if (module.ConstantPool.get(i) instanceof HassiumInt)
                 if (((HassiumInt) module.ConstantPool.get(i)).getValue() == constant)
@@ -757,7 +757,7 @@ public class HassiumCompiler implements IVisitor {
         return false;
     }
 
-    private boolean containsInt64Constant(long constant) {
+    private boolean containsInt64Constant(int constant) {
         for (HassiumObject obj : module.ConstantPool) {
             if (obj instanceof HassiumInt)
                 if (((HassiumInt) obj).getValue() == constant)

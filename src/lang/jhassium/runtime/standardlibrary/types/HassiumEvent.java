@@ -29,7 +29,7 @@ public class HassiumEvent extends HassiumObject {
     public HassiumEvent _new(VirtualMachine vm, HassiumObject[] args) {
         HassiumEvent hassiumEvent = new HassiumEvent();
 
-        hassiumEvent.Handlers = args.length == 0 ? new HassiumList(new HassiumObject[0]) : HassiumList.Create(args[0]);
+        hassiumEvent.Handlers = args.length == 0 ? new HassiumList(new HassiumObject[0]) : HassiumList.create(args[0]);
         try {
             hassiumEvent.Attributes.put("add", new HassiumFunction(this.getClass().getDeclaredMethod("add", VirtualMachine.class, HassiumObject[].class), this, -1));
             hassiumEvent.Attributes.put("handle", new HassiumFunction(this.getClass().getDeclaredMethod("handle", VirtualMachine.class, HassiumObject[].class), this, -1));

@@ -65,7 +65,7 @@ public class HassiumStringBuilder extends HassiumObject {
     }
 
     public HassiumStringBuilder insert(VirtualMachine vm, HassiumObject[] args) {
-        StringBuilder.insert(HassiumInt.create(args[0]).getValue().intValue(), args[1].toString(vm));
+        StringBuilder.insert(HassiumInt.create(args[0]).getValue(), args[1].toString(vm));
         return this;
     }
 
@@ -78,7 +78,7 @@ public class HassiumStringBuilder extends HassiumObject {
     }
 
     public HassiumChar __index__(VirtualMachine vm, HassiumObject[] args) {
-        return new HassiumChar(StringBuilder.charAt(HassiumInt.create(args[0]).getValue().intValue()));
+        return new HassiumChar(StringBuilder.charAt(HassiumInt.create(args[0]).getValue()));
     }
 
     public HassiumStringBuilder __storeindex__(VirtualMachine vm, HassiumObject[] args) {

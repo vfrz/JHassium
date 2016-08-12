@@ -43,7 +43,7 @@ public class HassiumRandom extends HassiumObject {
     public HassiumRandom _new(VirtualMachine vm, HassiumObject[] args) {
         HassiumRandom hassiumRandom = new HassiumRandom();
 
-        hassiumRandom.setValue(args.length == 1 ? new Random(HassiumInt.create(args[0]).getValue().intValue()) : new Random());
+        hassiumRandom.setValue(args.length == 1 ? new Random(HassiumInt.create(args[0]).getValue()) : new Random());
 
         try {
             hassiumRandom.Attributes.put("nextDouble", new HassiumFunction(hassiumRandom.getClass().getDeclaredMethod("nextDouble", VirtualMachine.class, HassiumObject[].class), hassiumRandom, 0));
@@ -66,10 +66,10 @@ public class HassiumRandom extends HassiumObject {
                 value = this.value.nextInt();
                 break;
             case 1:
-                value = this.value.nextInt(HassiumInt.create(args[0]).getValue().intValue());
+                value = this.value.nextInt(HassiumInt.create(args[0]).getValue());
                 break;
             case 2:
-                value = this.value.nextInt(HassiumInt.create(args[1]).getValue().intValue() - HassiumInt.create(args[0]).getValue().intValue()) + HassiumInt.create(args[0]).getValue().intValue();
+                value = this.value.nextInt(HassiumInt.create(args[1]).getValue() - HassiumInt.create(args[0]).getValue()) + HassiumInt.create(args[0]).getValue();
                 break;
         }
 

@@ -45,8 +45,8 @@ public class HassiumTuple extends HassiumObject {
     }
 
     public HassiumTuple split(VirtualMachine vm, HassiumObject[] args) {
-        int min = HassiumInt.create(args[0]).getValue().intValue();
-        int max = HassiumInt.create(args[1]).getValue().intValue();
+        int min = HassiumInt.create(args[0]).getValue();
+        int max = HassiumInt.create(args[1]).getValue();
 
         HassiumObject[] elements = new HassiumObject[max - min + 1];
 
@@ -57,7 +57,7 @@ public class HassiumTuple extends HassiumObject {
     }
 
     public HassiumBool __equals__(VirtualMachine vm, HassiumObject[] args) {
-        HassiumList list = HassiumList.Create(args[0].iter(vm));
+        HassiumList list = HassiumList.create(args[0].iter(vm));
         for (int i = 0; i < list.getValue().size(); i++)
             if (!list.getValue().get(i).equals(vm, value[i]).getValue())
                 return new HassiumBool(false);
@@ -73,7 +73,7 @@ public class HassiumTuple extends HassiumObject {
         if (obj instanceof HassiumDouble)
             return value[((HassiumDouble) obj).getValueInt()];
         else if (obj instanceof HassiumInt)
-            return value[((HassiumInt) obj).getValue().intValue()];
+            return value[((HassiumInt) obj).getValue()];
         HassiumLogger.error("Cannot index list with " + obj.getClass().getName());
         return null; //Not reachable but for compilation
     }

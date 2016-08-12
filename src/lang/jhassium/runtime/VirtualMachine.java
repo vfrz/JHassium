@@ -289,7 +289,7 @@ public class VirtualMachine {
                 stack.push(left.div(this, right));
                 break;
             case 4:
-                stack.push(new HassiumInt((long) Math.floor((double) left.div(this, right).getValue())));
+                stack.push(new HassiumInt((int) Math.floor((double) left.div(this, right).getValue())));
                 break;
             case 5:
                 stack.push(left.mod(this, right));

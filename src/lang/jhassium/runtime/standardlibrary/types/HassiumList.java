@@ -58,7 +58,7 @@ public class HassiumList extends HassiumObject {
         addType(HassiumList.TypeDefinition);
     }
 
-    public static HassiumList Create(HassiumObject obj) {
+    public static HassiumList create(HassiumObject obj) {
         if (!(obj instanceof HassiumList))
             HassiumLogger.error(String.format("Cannot convert from %1s to list!", obj.type()));
         return (HassiumList) obj;
@@ -84,7 +84,7 @@ public class HassiumList extends HassiumObject {
     }
 
     public HassiumNull copy(VirtualMachine vm, HassiumObject[] args) {
-        HassiumList list = HassiumList.Create(args[0]);
+        HassiumList list = HassiumList.create(args[0]);
         for (HassiumObject obj : value) {
             list.add(vm, obj);
         }
@@ -130,7 +130,7 @@ public class HassiumList extends HassiumObject {
 
     public HassiumList skip(VirtualMachine vm, HassiumObject[] args) {
         HassiumList list = new HassiumList(new HassiumObject[0]);
-        int step = (int) (long) HassiumInt.create(args[0]).getValue();
+        int step = HassiumInt.create(args[0]).getValue();
         if (step == -1)
             return reverse(vm, args);
         for (int i = 0; (i + step) < value.size(); i += step)
@@ -141,10 +141,10 @@ public class HassiumList extends HassiumObject {
     public HassiumList slice(VirtualMachine vm, HassiumObject[] args) {
         HassiumList list = new HassiumList(new HassiumObject[0]);
 
-        int max = args.length == 2 ? (int) (long) HassiumInt.create(args[1]).getValue() : list.getValue().size();
+        int max = args.length == 2 ? HassiumInt.create(args[1]).getValue() : list.getValue().size();
         if (max == -1)
             max = list.getValue().size() - 2;
-        for (int i = (int) (long) HassiumInt.create(args[0]).getValue(); i < max; i++)
+        for (int i = HassiumInt.create(args[0]).getValue(); i < max; i++)
             list.add(vm, value.get(i));
         return list;
     }
@@ -156,7 +156,7 @@ public class HassiumList extends HassiumObject {
     }
 
     public HassiumBool __equals__(VirtualMachine vm, HassiumObject[] args) {
-        HassiumList list = HassiumList.Create(args[0].iter(vm));
+        HassiumList list = HassiumList.create(args[0].iter(vm));
         for (int i = 0; i < list.getValue().size(); i++) {
             if (!list.getValue().get(i).equals(vm, value.get(i)).getValue())
                 return new HassiumBool(false);
@@ -173,7 +173,7 @@ public class HassiumList extends HassiumObject {
         if (obj instanceof HassiumDouble)
             return value.get(((HassiumDouble) obj).getValueInt());
         else if (obj instanceof HassiumInt)
-            return value.get((int) (long) ((HassiumInt) obj).getValue());
+            return value.get(((HassiumInt) obj).getValue());
         HassiumLogger.error("Cannot index list with " + obj.type().toString(vm));
         return null; // Not reachable but for compilation
     }
@@ -181,12 +181,12 @@ public class HassiumList extends HassiumObject {
     public HassiumObject __storeindex__(VirtualMachine vm, HassiumObject[] args) {
         int index = 0;
         if (args[0] instanceof HassiumInt)
-            index = (int) (long) ((HassiumInt) args[0]).getValue();
+            index = ((HassiumInt) args[0]).getValue();
         else if (args[0] instanceof HassiumDouble)
             index = ((HassiumDouble) args[0]).getValueInt();
         else
             HassiumLogger.error("Cannot index list with " + args[0].type().toString(vm));
-        value.set(index, args[1]);
+        value.add(index, args[1]);
         return args[1];
     }
 
