@@ -30,7 +30,7 @@ public class HassiumTuple extends HassiumObject {
             Attributes.put(HassiumObject.ITER_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__iter__", VirtualMachine.class, HassiumObject[].class), this, 0));
             Attributes.put(HassiumObject.TOSTRING_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__tostring__", VirtualMachine.class, HassiumObject[].class), this, 0));
         } catch (NoSuchMethodException e) {
-            HassiumLogger.error("Internal error HassiumBool : " + e.getMessage());
+            HassiumLogger.error("Internal error HassiumTuple : " + e.getMessage());
         }
 
         addType(HassiumTuple.TypeDefinition);

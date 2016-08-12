@@ -26,11 +26,11 @@ public class HassiumMultiFunc extends HassiumObject {
     public HassiumMultiFunc(List<MethodBuilder> methods) {
         this.lambdas = methods;
         try {
-            Attributes.put("add", new HassiumFunction(this.getClass().getDeclaredMethod("add"), this, -1));
-            Attributes.put(HassiumObject.ADD_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__add__"), this, 1));
-            Attributes.put(HassiumObject.INVOKE_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__invoke__"), this, -1));
+            Attributes.put("add", new HassiumFunction(this.getClass().getDeclaredMethod("add", VirtualMachine.class, HassiumObject[].class), this, -1));
+            Attributes.put(HassiumObject.ADD_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__add__", VirtualMachine.class, HassiumObject[].class), this, 1));
+            Attributes.put(HassiumObject.INVOKE_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__invoke__", VirtualMachine.class, HassiumObject[].class), this, -1));
         } catch (NoSuchMethodException e) {
-            HassiumLogger.error("Internal error HassiumBool : " + e.getMessage());
+            HassiumLogger.error("Internal error HassiumMultiFunc : " + e.getMessage());
         }
     }
 

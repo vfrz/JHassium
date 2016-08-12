@@ -34,7 +34,7 @@ public class HassiumDictionary extends HassiumObject {
             Attributes.put(HassiumObject.INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__index__", VirtualMachine.class, HassiumObject[].class), this, 1));
             Attributes.put(HassiumObject.STORE_INDEX_FUNCTION, new HassiumFunction(this.getClass().getDeclaredMethod("__storeindex__", VirtualMachine.class, HassiumObject[].class), this, 2));
         } catch (NoSuchMethodException e) {
-            HassiumLogger.error("Internal error HassiumBool : " + e.getMessage());
+            HassiumLogger.error("Internal error HassiumDictionnary : " + e.getMessage());
         }
         addType(HassiumDictionary.TypeDefinition);
     }

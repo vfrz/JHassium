@@ -35,7 +35,7 @@ public class HassiumEvent extends HassiumObject {
             hassiumEvent.Attributes.put("handle", new HassiumFunction(this.getClass().getDeclaredMethod("handle", VirtualMachine.class, HassiumObject[].class), this, -1));
             hassiumEvent.Attributes.put("remove", new HassiumFunction(this.getClass().getDeclaredMethod("remove", VirtualMachine.class, HassiumObject[].class), this, -1));
         } catch (NoSuchMethodException e) {
-            HassiumLogger.error("Internal error HassiumChar : " + e.getMessage());
+            HassiumLogger.error("Internal error HassiumEvent : " + e.getMessage());
         }
         hassiumEvent.addType(HassiumEvent.TypeDefinition);
 
