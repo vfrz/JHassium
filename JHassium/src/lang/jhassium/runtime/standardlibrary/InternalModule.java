@@ -4,6 +4,7 @@ import lang.jhassium.runtime.standardlibrary.collections.HassiumCollectionsModul
 import lang.jhassium.runtime.standardlibrary.io.HassiumIOModule;
 import lang.jhassium.runtime.standardlibrary.math.HassiumMathModule;
 import lang.jhassium.runtime.standardlibrary.text.HassiumTextModule;
+import lang.jhassium.runtime.standardlibrary.util.HassiumUtilModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class InternalModule extends HassiumObject {
         add(new HassiumMathModule());
         add(new HassiumCollectionsModule());
         add(new HassiumIOModule());
+        add(new HassiumUtilModule());
         //TODO Add internal modules
     }};
     private String name;

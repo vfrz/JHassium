@@ -72,7 +72,7 @@ public class GlobalFunctions {
         String[] objs = new String[args.length - 1];
         for (int i = 1; i < args.length; i++)
             objs[i - 1] = args[i].toString(vm);
-        return new HassiumString(String.format(HassiumString.create(args[0]).toString(), objs));
+        return new HassiumString(String.format(HassiumString.create(args[0]).toString(), (Object[]) objs)); //TODO Verify this cast
     }
 
     public static HassiumList get_Globals(VirtualMachine vm, HassiumObject[] args) {

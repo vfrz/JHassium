@@ -1,0 +1,11 @@
+func main () {
+	println (add (4, 5));
+	println (add (4, 5, 6));
+}
+
+func add (x, y) {
+	return x + y;
+}
+func add (x, y, z) {
+	return x + y + z;
+}

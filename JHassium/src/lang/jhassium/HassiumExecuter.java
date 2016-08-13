@@ -10,8 +10,6 @@ import lang.jhassium.runtime.VirtualMachine;
 import lang.jhassium.semanticanalysis.SemanticAnalyzer;
 import lang.jhassium.semanticanalysis.SymbolTable;
 import lang.jhassium.utils.HassiumIO;
-import lang.jhassium.utils.HassiumLogger;
-import org.apache.commons.lang3.time.StopWatch;
 
 import java.util.List;
 
@@ -45,28 +43,10 @@ public class HassiumExecuter {
         SemanticAnalyzer analyzer = new SemanticAnalyzer();
         HassiumCompiler compiler = new HassiumCompiler();
 
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
         List<Token> tokens = lexer.Scan(source);
-        stopWatch.stop();
-        HassiumLogger.info("Tokenize time : " + stopWatch.getTime() + " ms");
-        stopWatch.reset();
-        stopWatch.start();
         AstNode ast = parser.Parse(tokens);
-        stopWatch.stop();
-        HassiumLogger.info("Parse time : " + stopWatch.getTime() + " ms");
-        stopWatch.reset();
-        stopWatch.start();
         SymbolTable table = analyzer.Analyze(ast);
-        stopWatch.stop();
-        HassiumLogger.info("Analyze time : " + stopWatch.getTime() + " ms");
-        stopWatch.reset();
-        stopWatch.start();
         module = compiler.Compile(ast, table, "MainModule");
-        stopWatch.stop();
-        HassiumLogger.info("Compile time : " + stopWatch.getTime() + " ms");
-        stopWatch.reset();
-        stopWatch.start();
         if (executeVM) {
             vm = new VirtualMachine();
             try {
@@ -77,8 +57,6 @@ public class HassiumExecuter {
                     System.out.println(String.format("At %1s -> ", str));
             }
         }
-        stopWatch.stop();
-        HassiumLogger.info("Execution time : " + stopWatch.getTime() + " ms");
         return module;
     }
 }

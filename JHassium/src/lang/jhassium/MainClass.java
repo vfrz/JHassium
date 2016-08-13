@@ -1,8 +1,5 @@
 package lang.jhassium;
 
-import lang.jhassium.utils.HassiumLogger;
-import org.apache.commons.lang3.time.StopWatch;
-
 /**
  * File : MainClass.java
  * Description : None
@@ -13,11 +10,6 @@ import org.apache.commons.lang3.time.StopWatch;
 public class MainClass {
 
     public static void main(String[] args) {
-
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
         HassiumArgumentConfig.executeConfig(new HassiumArgumentParser(args).parse());
-        stopWatch.stop();
-        HassiumLogger.info("Total time : " + stopWatch.getTime() + " ms");
     }
 }
